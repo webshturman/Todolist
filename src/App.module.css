@@ -1,0 +1,21 @@
+.errorInput {
+    border: red 1px solid;
+    outline: none;
+}
+.nonErrorInput,.errorInput{
+    margin-right: 5px;
+}
+
+.errorMessage {
+    color: red;
+}
+.activeFilter{
+    background-color: aquamarine;
+}
+.isDone {
+    opacity:0.7;
+}
+.common {
+    display: flex;
+    align-items: flex-end;
+}
