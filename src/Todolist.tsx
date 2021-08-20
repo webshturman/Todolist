@@ -14,10 +14,10 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (id:string) => void
+    removeTask: (id:string, TodolistID:string) => void
     changeFilter: (filter:typeFilter) =>void
-    addTask: (value:string) => void
-    changeCheckbox:(checkbox:boolean, id:string) => void
+    addTask: (value:string, TodolistID:string) => void
+    changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
     filter:typeFilter
 }
 //-----------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ export function Todolist(props: PropsType) {
 
     const addHandler = ()=> {
         if(value) {
-            props.addTask(value)
+            props.addTask(value,TodolistID)
             setValue('')
         } else{
             setError('Type some text')
@@ -50,7 +50,7 @@ export function Todolist(props: PropsType) {
             {props.tasks.map((mTasks) => {
                 // debugger
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
-                    props.changeCheckbox(e.currentTarget.checked, mTasks.id)
+                    props.changeCheckbox(e.currentTarget.checked, mTasks.id, TodolistID )
                 }
                 let inputChecked = mTasks.isDone ? s.isDone : ''
 
