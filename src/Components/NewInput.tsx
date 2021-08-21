@@ -7,9 +7,10 @@ export type InputType = {
     setError: (error: string) => void
     setValue: (value: string) => void
     error: string
-    addTask: (value: string) => void
+    addTask: (value: string,TodolistID:string) => void
+    TodolistID:string
 }
-export const NewInput: React.FC<InputType> = ({value, setError, setValue, error, addTask}) => {
+export const NewInput: React.FC<InputType> = ({value, setError, setValue, error, addTask,  TodolistID}) => {
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         let currentValue = e.currentTarget.value.trim()
         if (!currentValue) {
@@ -22,7 +23,7 @@ export const NewInput: React.FC<InputType> = ({value, setError, setValue, error,
     }
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && value) {
-            addTask(value)
+            addTask(value,TodolistID)
             setValue('')
         } else {
             setError('Type some text')

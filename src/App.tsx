@@ -4,10 +4,10 @@ import {TaskType, Todolist} from './Todolist';
 import {v1} from "uuid";
 //-----------------------------------------------------------------------------------------
 export type typeFilter = 'All' | 'Active' | 'Completed'
-type TodolistIdType = {
+export type TodolistIdType = {
     [key: string]: Array<TaskType>
 }
-type TodolistType = {
+export type TodolistType = {
     id: string
     name: string
     filter: typeFilter
@@ -19,7 +19,7 @@ function App() {
     const TodolistID2 = '368d-1756'
     const [todolist, setTodolist] = useState<Array<TodolistType>>([
         {id: TodolistID1, name: 'What to learn', filter: 'All'},
-        {id: TodolistID1, name: 'What to learn Extra', filter: 'All'}
+        {id: TodolistID2, name: 'What to learn Extra', filter: 'All'}
     ])
     let [tasks, setTasks] = useState<TodolistIdType>({
             [TodolistID1]: [
@@ -34,7 +34,7 @@ function App() {
             ]
         }
     )
-    let [filter, setFilter] = useState<typeFilter>('All')
+
 
     const changeCheckbox = (checkbox: boolean, id: string, TodolistID: string) => {
         setTasks({...tasks, [TodolistID]: tasks[TodolistID].map(td => td.id === id ? {...td, isDone: checkbox} : td)})
@@ -48,31 +48,45 @@ function App() {
         let newTask = {id: v1(), title: value, isDone: false}
         setTasks({...tasks, [TodolistID]: [newTask, ...tasks[TodolistID]]})
     }
-    let filteredTasks = tasks
-    if (filter === 'Active') {
-        filteredTasks = tasks.filter(f => !f.isDone)
+
+    const changeTodolist = (value: typeFilter, TodolistID: string) => {
+        // setTodolist([...todolist, {...todolist[TodolistID], filter:value}])
+        setTodolist(todolist.map(td => td.id === TodolistID ? {...td, filter: value} : td))
     }
-    if (filter === 'Completed') {
-        filteredTasks = tasks.filter(f => f.isDone)
+
+    const removeTodolist = (TodolistID: string) => {
+        setTodolist(todolist.filter(tl => tl.id !== TodolistID))
+        const copyTasks = {...tasks}
+        delete copyTasks[TodolistID] //вместе с тудулистом удаляем таски
+        setTasks(copyTasks)
     }
-    const changeFilter = (filter: typeFilter, TodolistID: string) => {
-        setFilter(filter)
-    }
+
     return (
+
         <div className="App">
+
             {todolist.map(t => {
+                let filteredTasks = tasks[t.id]
+                if (t.filter === 'Active') {
+                    filteredTasks = tasks[t.id].filter(f => !f.isDone)
+                }
+                if (t.filter === 'Completed') {
+                    filteredTasks = tasks[t.id].filter(f => f.isDone)
+                }
                 return (
                     <Todolist
-                        title="Programs"
+                        key={t.id}
+                        TodolistID={t.id}
+                        title={t.name}
                         tasks={filteredTasks}
                         removeTask={removeTask}
-                        changeFilter={changeFilter}
+                        changeTodolist={changeTodolist}
                         addTask={addTask}
                         changeCheckbox={changeCheckbox}
-                        filter={filter}
+                        filter={t.filter}
+                        removeTodolist={removeTodolist}
                     />)
             })}
-
         </div>
     );
 }

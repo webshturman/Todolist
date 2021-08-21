@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {typeFilter} from "./App";
+import {TodolistIdType, typeFilter} from "./App";
 import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
 import {NewInput} from "./Components/NewInput";
@@ -15,10 +15,12 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (id:string, TodolistID:string) => void
-    changeFilter: (filter:typeFilter) =>void
+    changeTodolist: (filter:typeFilter, TodolistID: string) =>void
     addTask: (value:string, TodolistID:string) => void
     changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
+    removeTodolist: (TodolistID:string) =>void
     filter:typeFilter
+    TodolistID:string
 }
 //-----------------------------------------------------------------------------------
 
@@ -28,35 +30,37 @@ export function Todolist(props: PropsType) {
 
     const addHandler = ()=> {
         if(value) {
-            props.addTask(value,TodolistID)
+            props.addTask(value,props.TodolistID)
             setValue('')
         } else{
             setError('Type some text')
         }
     }
-
-    // const charFooHandler = (filterValue:typeFilter)=>{
-    //     props.changeFilter(filterValue)
+    const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
+    // const charFooHandler = (filter:typeFilter)=>{
+    //     props.changeTodolist(filterValue,props.TodolistID)
     // }
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
-        <h3>{props.title}</h3>
+        <h3><span className={s.hTitle}>{props.title}</span><NewButton callback={todolistRemover} title={'X'}/></h3>
+
         <div className={s.common }>
-            <NewInput value={value} error={error} setValue={setValue} setError={setError} addTask={props.addTask}/>
+            <NewInput value={value} error={error} setValue={setValue} setError={setError} addTask={props.addTask} TodolistID={props.TodolistID}/>
             <NewButton callback={addHandler} title={'+'}/>
         </div>
         <div className={s.errorMessage}>{error}</div>
+        {/*{error && <div className={s.errorMessage}>{error}</div>}*/}
         <ul>
             {props.tasks.map((mTasks) => {
-                // debugger
+                const taskRemover = ()=> props.removeTask(mTasks.id,props.TodolistID)
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
-                    props.changeCheckbox(e.currentTarget.checked, mTasks.id, TodolistID )
+                    props.changeCheckbox(e.currentTarget.checked, mTasks.id, props.TodolistID )
                 }
                 let inputChecked = mTasks.isDone ? s.isDone : ''
 
                 return (
                     <li key={mTasks.id} className={inputChecked} >
-                        <NewButton callback={()=> props.removeTask(mTasks.id)} title={'X'}/>
+                        <NewButton callback={taskRemover} title={'X'}/>
                         <input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>
                         <span>{mTasks.title}</span>
                     </li>
@@ -65,9 +69,9 @@ export function Todolist(props: PropsType) {
         </ul>
 
         <div>
-            <NewButton callback={()=> props.changeFilter('All')} title={'All'} filter={props.filter}/>
-            <NewButton callback={()=> props.changeFilter('Active')} title={'Active'} filter={props.filter}/>
-            <NewButton callback={()=> props.changeFilter('Completed')} title={'Completed'} filter={props.filter}/>
+            <NewButton callback={()=> props.changeTodolist('All',props.TodolistID)} title={'All'} filter={props.filter}/>
+            <NewButton callback={()=> props.changeTodolist('Active',props.TodolistID)} title={'Active'} filter={props.filter}/>
+            <NewButton callback={()=> props.changeTodolist('Completed',props.TodolistID)} title={'Completed'} filter={props.filter}/>
         </div>
     </div>
 }
