@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from '../App.module.css'
+import {NewButton} from "./NewButton";
 
 
 export type InputType = {
@@ -29,9 +30,23 @@ export const NewInput: React.FC<InputType> = ({value, setError, setValue, error,
             setError('Type some text')
         }
     }
+    const addHandler = ()=> {
+        if(value) {
+           addTask(value,TodolistID)
+            setValue('')
+        } else{
+            setError('Type some text')
+        }
+    }
     const inputClasses = error ? s.errorInput : s.nonErrorInput
-    return <div>
-            <input className={inputClasses} value={value} onChange={changeInputValue} onKeyPress={onKeyHandler}/>
-    </div>
+    return (
+        <>
+            <div>
+                <input className={inputClasses} value={value} onChange={changeInputValue} onKeyPress={onKeyHandler}/>
+                <NewButton callback={addHandler} title={'+'}/>
+            </div>
+            <div className={s.errorMessage}>{error}</div>
+        </>
+        )
 }
 

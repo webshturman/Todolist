@@ -28,14 +28,7 @@ export function Todolist(props: PropsType) {
     let [value, setValue] = useState('')
     let [error, setError] = useState('')
 
-    const addHandler = ()=> {
-        if(value) {
-            props.addTask(value,props.TodolistID)
-            setValue('')
-        } else{
-            setError('Type some text')
-        }
-    }
+
     const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
     // const charFooHandler = (filter:typeFilter)=>{
     //     props.changeTodolist(filterValue,props.TodolistID)
@@ -43,13 +36,8 @@ export function Todolist(props: PropsType) {
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
         <h3><span className={s.hTitle}>{props.title}</span><NewButton callback={todolistRemover} title={'X'}/></h3>
+        <NewInput value={value} error={error} setValue={setValue} setError={setError} addTask={props.addTask} TodolistID={props.TodolistID}/>
 
-        <div className={s.common }>
-            <NewInput value={value} error={error} setValue={setValue} setError={setError} addTask={props.addTask} TodolistID={props.TodolistID}/>
-            <NewButton callback={addHandler} title={'+'}/>
-        </div>
-        <div className={s.errorMessage}>{error}</div>
-        {/*{error && <div className={s.errorMessage}>{error}</div>}*/}
         <ul>
             {props.tasks.map((mTasks) => {
                 const taskRemover = ()=> props.removeTask(mTasks.id,props.TodolistID)

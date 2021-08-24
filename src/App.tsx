@@ -35,7 +35,6 @@ function App() {
         }
     )
 
-
     const changeCheckbox = (checkbox: boolean, id: string, TodolistID: string) => {
         setTasks({...tasks, [TodolistID]: tasks[TodolistID].map(td => td.id === id ? {...td, isDone: checkbox} : td)})
         //берем массив, ищем объект с нужным id, если находим - расчехляем объект и меняем значение isDone на пришедшее
@@ -48,12 +47,10 @@ function App() {
         let newTask = {id: v1(), title: value, isDone: false}
         setTasks({...tasks, [TodolistID]: [newTask, ...tasks[TodolistID]]})
     }
-
     const changeTodolist = (value: typeFilter, TodolistID: string) => {
         // setTodolist([...todolist, {...todolist[TodolistID], filter:value}])
         setTodolist(todolist.map(td => td.id === TodolistID ? {...td, filter: value} : td))
     }
-
     const removeTodolist = (TodolistID: string) => {
         setTodolist(todolist.filter(tl => tl.id !== TodolistID))
         const copyTasks = {...tasks}
