@@ -7,7 +7,7 @@ export type InputType = {
     addTask: (value: string, TodolistID: string) => void
     TodolistID: string
 }
-export const NewInput: React.FC<InputType> = ({addTask, TodolistID}) => {
+export const AddItemForm: React.FC<InputType> = ({addTask, TodolistID}) => {
     let [value, setValue] = useState('')
     let [error, setError] = useState('')
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,13 +38,13 @@ export const NewInput: React.FC<InputType> = ({addTask, TodolistID}) => {
     }
     const inputClasses = error ? s.errorInput : s.nonErrorInput
     return (
-        <>
+        <div>
             <div>
                 <input className={inputClasses} value={value} onChange={changeInputValue} onKeyPress={onKeyHandler}/>
                 <NewButton callback={addHandler} title={'+'}/>
             </div>
             <div className={s.errorMessage}>{error}</div>
-        </>
+        </div>
     )
 }
 

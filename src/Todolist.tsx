@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {TodolistIdType, typeFilter} from "./App";
 import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
-import {NewInput} from "./Components/NewInput";
+import {AddItemForm} from "./Components/AddItemForm";
 
 
 export type TaskType = {
@@ -33,7 +33,7 @@ export function Todolist(props: PropsType) {
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
         <h3><span className={s.hTitle}>{props.title}</span><NewButton callback={todolistRemover} title={'X'}/></h3>
-        <NewInput addTask={props.addTask} TodolistID={props.TodolistID}/>
+        <AddItemForm addTask={props.addTask} TodolistID={props.TodolistID}/>
 
         <ul>
             {props.tasks.map((mTasks) => {
