@@ -4,14 +4,12 @@ import {NewButton} from "./NewButton";
 
 
 export type InputType = {
-    value: string
-    setError: (error: string) => void
-    setValue: (value: string) => void
-    error: string
-    addTask: (value: string,TodolistID:string) => void
-    TodolistID:string
+    addTask: (value: string, TodolistID: string) => void
+    TodolistID: string
 }
-export const NewInput: React.FC<InputType> = ({value, setError, setValue, error, addTask,  TodolistID}) => {
+export const NewInput: React.FC<InputType> = ({addTask, TodolistID}) => {
+    let [value, setValue] = useState('')
+    let [error, setError] = useState('')
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         let currentValue = e.currentTarget.value.trim()
         if (!currentValue) {
@@ -24,17 +22,17 @@ export const NewInput: React.FC<InputType> = ({value, setError, setValue, error,
     }
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && value) {
-            addTask(value,TodolistID)
+            addTask(value, TodolistID)
             setValue('')
         } else {
             setError('Type some text')
         }
     }
-    const addHandler = ()=> {
-        if(value) {
-           addTask(value,TodolistID)
+    const addHandler = () => {
+        if (value) {
+            addTask(value, TodolistID)
             setValue('')
-        } else{
+        } else {
             setError('Type some text')
         }
     }
@@ -47,6 +45,6 @@ export const NewInput: React.FC<InputType> = ({value, setError, setValue, error,
             </div>
             <div className={s.errorMessage}>{error}</div>
         </>
-        )
+    )
 }
 

@@ -25,9 +25,6 @@ type PropsType = {
 //-----------------------------------------------------------------------------------
 
 export function Todolist(props: PropsType) {
-    let [value, setValue] = useState('')
-    let [error, setError] = useState('')
-
 
     const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
     // const charFooHandler = (filter:typeFilter)=>{
@@ -36,7 +33,7 @@ export function Todolist(props: PropsType) {
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
         <h3><span className={s.hTitle}>{props.title}</span><NewButton callback={todolistRemover} title={'X'}/></h3>
-        <NewInput value={value} error={error} setValue={setValue} setError={setError} addTask={props.addTask} TodolistID={props.TodolistID}/>
+        <NewInput addTask={props.addTask} TodolistID={props.TodolistID}/>
 
         <ul>
             {props.tasks.map((mTasks) => {
