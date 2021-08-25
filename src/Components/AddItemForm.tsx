@@ -4,34 +4,34 @@ import {NewButton} from "./NewButton";
 
 
 export type InputType = {
-    addTask: (value: string, TodolistID: string) => void
-    TodolistID: string
+    addItem: (title: string) => void
+
 }
-export const AddItemForm: React.FC<InputType> = ({addTask, TodolistID}) => {
-    let [value, setValue] = useState('')
+export const AddItemForm: React.FC<InputType> = ({ addItem}) => {
+    let [title, setTitle] = useState('')
     let [error, setError] = useState('')
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-        let currentValue = e.currentTarget.value.trim()
-        if (!currentValue) {
+        let currentValue = e.currentTarget.value
+        if (!currentValue.trim()) {
             setError('Type some text')
-            setValue('')
+            setTitle('')
         } else {
-            setValue(currentValue)
+            setTitle(currentValue)
             setError('')
         }
     }
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && value) {
-            addTask(value, TodolistID)
-            setValue('')
+        if (e.key === 'Enter' && title) {
+            addItem(title)
+            setTitle('')
         } else {
             setError('Type some text')
         }
     }
     const addHandler = () => {
-        if (value) {
-            addTask(value, TodolistID)
-            setValue('')
+        if (title) {
+            addItem(title)
+            setTitle('')
         } else {
             setError('Type some text')
         }
@@ -40,7 +40,7 @@ export const AddItemForm: React.FC<InputType> = ({addTask, TodolistID}) => {
     return (
         <div>
             <div>
-                <input className={inputClasses} value={value} onChange={changeInputValue} onKeyPress={onKeyHandler}/>
+                <input className={inputClasses} value={title} onChange={changeInputValue} onKeyPress={onKeyHandler}/>
                 <NewButton callback={addHandler} title={'+'}/>
             </div>
             <div className={s.errorMessage}>{error}</div>

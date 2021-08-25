@@ -3,6 +3,7 @@ import {TodolistIdType, typeFilter} from "./App";
 import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
 import {AddItemForm} from "./Components/AddItemForm";
+import {EditableSpan} from "./Components/EditableSpan";
 
 
 export type TaskType = {
@@ -16,7 +17,7 @@ type PropsType = {
     tasks: Array<TaskType>
     removeTask: (id:string, TodolistID:string) => void
     changeTodolist: (filter:typeFilter, TodolistID: string) =>void
-    addTask: (value:string, TodolistID:string) => void
+    addTask: (title:string, TodolistID:string) => void
     changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
     removeTodolist: (TodolistID:string) =>void
     filter:typeFilter
@@ -27,13 +28,12 @@ type PropsType = {
 export function Todolist(props: PropsType) {
 
     const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
-    // const charFooHandler = (filter:typeFilter)=>{
-    //     props.changeTodolist(filterValue,props.TodolistID)
-    // }
+    const changeTdlButton = (filter:typeFilter) => props.changeTodolist(filter,props.TodolistID)
+    const newAddTask = (title:string)=> props.addTask(title, props.TodolistID)
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
         <h3><span className={s.hTitle}>{props.title}</span><NewButton callback={todolistRemover} title={'X'}/></h3>
-        <AddItemForm addTask={props.addTask} TodolistID={props.TodolistID}/>
+        <AddItemForm  addItem={newAddTask}/>
 
         <ul>
             {props.tasks.map((mTasks) => {
@@ -47,16 +47,16 @@ export function Todolist(props: PropsType) {
                     <li key={mTasks.id} className={inputChecked} >
                         <NewButton callback={taskRemover} title={'X'}/>
                         <input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>
-                        <span>{mTasks.title}</span>
+                        <EditableSpan name={mTasks.title}/>
                     </li>
                 )
             })}
         </ul>
 
         <div>
-            <NewButton callback={()=> props.changeTodolist('All',props.TodolistID)} title={'All'} filter={props.filter}/>
-            <NewButton callback={()=> props.changeTodolist('Active',props.TodolistID)} title={'Active'} filter={props.filter}/>
-            <NewButton callback={()=> props.changeTodolist('Completed',props.TodolistID)} title={'Completed'} filter={props.filter}/>
+            <NewButton callback={()=> changeTdlButton('All')} title={'All'} filter={props.filter}/>
+            <NewButton callback={()=> changeTdlButton('Active')} title={'Active'} filter={props.filter}/>
+            <NewButton callback={()=> changeTdlButton('Completed')} title={'Completed'} filter={props.filter}/>
         </div>
     </div>
 }
