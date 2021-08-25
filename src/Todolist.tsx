@@ -20,6 +20,8 @@ type PropsType = {
     addTask: (title:string, TodolistID:string) => void
     changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
     removeTodolist: (TodolistID:string) =>void
+    refreshingTaskTitle: (id: string, title:string,  TodolistID: string) => void
+    refreshTodolistTitle:(title:string, TodolistID: string)=>void
     filter:typeFilter
     TodolistID:string
 }
@@ -30,10 +32,12 @@ export function Todolist(props: PropsType) {
     const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
     const changeTdlButton = (filter:typeFilter) => props.changeTodolist(filter,props.TodolistID)
     const newAddTask = (title:string)=> props.addTask(title, props.TodolistID)
+    const newTodolistTitle = (title:string)=> props.refreshTodolistTitle(title, props.TodolistID)
+
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
-        <h3><span className={s.hTitle}>{props.title}</span><NewButton callback={todolistRemover} title={'X'}/></h3>
-        <AddItemForm  addItem={newAddTask}/>
+        <h3><EditableSpan name={props.title} refreshingTitle={newTodolistTitle}/> <NewButton callback={todolistRemover} title={'X'}/></h3>
+        <AddItemForm  addItem={newAddTask} />
 
         <ul>
             {props.tasks.map((mTasks) => {
@@ -41,13 +45,14 @@ export function Todolist(props: PropsType) {
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
                     props.changeCheckbox(e.currentTarget.checked, mTasks.id, props.TodolistID )
                 }
+                const refreshTitle = (title:string) => props.refreshingTaskTitle(mTasks.id, title, props.TodolistID)
                 let inputChecked = mTasks.isDone ? s.isDone : ''
 
                 return (
                     <li key={mTasks.id} className={inputChecked} >
                         <NewButton callback={taskRemover} title={'X'}/>
                         <input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>
-                        <EditableSpan name={mTasks.title}/>
+                        <EditableSpan name={mTasks.title} refreshingTitle={refreshTitle}/>
                     </li>
                 )
             })}

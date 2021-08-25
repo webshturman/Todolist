@@ -41,6 +41,9 @@ function App() {
         //берем массив, ищем объект с нужным id, если находим - расчехляем объект и меняем значение isDone на пришедшее
         //checkbox, если id не совпадают, то объект не изменяем
     }
+    const refreshingTaskTitle = (id: string, title:string,  TodolistID: string) => {
+        setTasks({...tasks, [TodolistID]: tasks[TodolistID].map(td => td.id === id ? {...td, title: title} : td)})
+    }
     const removeTask = (id: string, TodolistID: string) => {
         setTasks({...tasks, [TodolistID]: tasks[TodolistID].filter(t => t.id !== id)})
     }
@@ -50,6 +53,9 @@ function App() {
     }
     const changeTodolist = (value: typeFilter, TodolistID: string) => {
         setTodolist(todolists.map(td => td.id === TodolistID ? {...td, filter: value} : td))
+    }
+    const refreshTodolistTitle = (title:string, TodolistID: string) => {
+        setTodolist(todolists.map(td => td.id === TodolistID ? {...td, title: title} : td))
     }
     const removeTodolist = (TodolistID: string) => {
         setTodolist(todolists.filter(tl => tl.id !== TodolistID))
@@ -86,6 +92,8 @@ function App() {
                         changeCheckbox={changeCheckbox}
                         filter={t.filter}
                         removeTodolist={removeTodolist}
+                        refreshingTaskTitle={refreshingTaskTitle}
+                        refreshTodolistTitle={refreshTodolistTitle}
                     />)
             })}
         </div>

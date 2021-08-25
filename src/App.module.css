@@ -5,9 +5,6 @@
 .nonErrorInput,.errorInput{
     margin-right: 5px;
 }
-.hTitle {
-    margin-right: 5px;
-}
 .errorMessage {
     color: red;
 }
