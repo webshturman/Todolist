@@ -4,6 +4,8 @@ import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
+import {IconButton} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 
 export type TaskType = {
@@ -36,10 +38,15 @@ export function Todolist(props: PropsType) {
 
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
-        <h3><EditableSpan name={props.title} refreshingTitle={newTodolistTitle}/> <NewButton callback={todolistRemover} title={'X'}/></h3>
+        <h3><EditableSpan name={props.title} refreshingTitle={newTodolistTitle}/>
+            <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px"}}>
+                <Delete/>
+            </IconButton>
+            {/*<NewButton callback={todolistRemover} title={'X'}/>*/}
+        </h3>
         <AddItemForm  addItem={newAddTask} />
 
-        <ul>
+        <ul style={{listStyle:"none", padding:"0"}}>
             {props.tasks.map((mTasks) => {
                 const taskRemover = ()=> props.removeTask(mTasks.id,props.TodolistID)
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +57,10 @@ export function Todolist(props: PropsType) {
 
                 return (
                     <li key={mTasks.id} className={inputChecked} >
-                        <NewButton callback={taskRemover} title={'X'}/>
+                        <IconButton size={'small'}  onClick={taskRemover}>
+                            <Delete/>
+                        </IconButton>
+                        {/*<NewButton callback={taskRemover} title={'X'}/>*/}
                         <input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>
                         <EditableSpan name={mTasks.title} refreshingTitle={refreshTitle}/>
                     </li>
