@@ -1,6 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from '../App.module.css'
 import {NewButton} from "./NewButton";
+import {IconButton, TextField} from "@material-ui/core";
+import {Add, AddBox, Delete} from "@material-ui/icons";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
 export type InputType = {
@@ -9,15 +12,15 @@ export type InputType = {
 }
 export const AddItemForm: React.FC<InputType> = ({ addItem}) => {
     let [title, setTitle] = useState('')
-    let [error, setError] = useState('')
+    let [error, setError] = useState(false)
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         let currentValue = e.currentTarget.value
         if (!currentValue.trim()) {
-            setError('Type some text')
+            setError(true)
             setTitle('')
         } else {
             setTitle(currentValue)
-            setError('')
+            setError(false)
         }
     }
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -25,7 +28,7 @@ export const AddItemForm: React.FC<InputType> = ({ addItem}) => {
             addItem(title)
             setTitle('')
         } else {
-            setError('Type some text')
+            setError(true)
         }
     }
     const addHandler = () => {
@@ -33,17 +36,24 @@ export const AddItemForm: React.FC<InputType> = ({ addItem}) => {
             addItem(title)
             setTitle('')
         } else {
-            setError('Type some text')
+            setError(true)
         }
     }
     const inputClasses = error ? s.errorInput : s.nonErrorInput
     return (
         <div>
             <div>
-                <input className={inputClasses} value={title} onChange={changeInputValue} onKeyPress={onKeyHandler}/>
-                <NewButton callback={addHandler} title={'+'}/>
+                <TextField value={title} onChange={changeInputValue} size={'small'} label={'Title'}
+                           onKeyPress={onKeyHandler} variant={'outlined'} style={{height:'20px'}}
+                           helperText={error && 'Type some text'} color={"primary"} error={error}>
+
+                </TextField>
+                {/*<input className={inputClasses} value={title} onChange={changeInputValue} onKeyPress={onKeyHandler}/>*/}
+                <IconButton onClick={addHandler} color={'primary'}>
+                    <AddCircleOutlineIcon />
+                </IconButton>
             </div>
-            <div className={s.errorMessage}>{error}</div>
+            {/*<div className={s.errorMessage}>{error}</div>*/}
         </div>
     )
 }

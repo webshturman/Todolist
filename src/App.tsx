@@ -88,10 +88,10 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding:"15px 0"}}>
+                <Grid container style={{padding:"15px 0", justifyContent: "center"}}>
                     <AddItemForm addItem={addTodoList}/>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={1}>
                     {todolists.map(t => {
                         let filteredTasks = tasks[t.id]
                         if (t.filter === 'Active') {
@@ -100,8 +100,8 @@ function App() {
                         if (t.filter === 'Completed') {
                             filteredTasks = tasks[t.id].filter(f => f.isDone)
                         }
-                        return (
-                            // <Paper elevation={10}>
+                        return <Grid item>
+                            <Paper elevation={10} style={{padding:"15px"}}>
                                 <Todolist
                                     key={t.id}
                                     TodolistID={t.id}
@@ -116,8 +116,8 @@ function App() {
                                     refreshingTaskTitle={refreshingTaskTitle}
                                     refreshTodolistTitle={refreshTodolistTitle}
                                 />
-                            // </Paper>
-                                )
+                            </Paper>
+                        </Grid>
                     })}
                 </Grid>
             </Container>

@@ -4,7 +4,7 @@ import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
-import {IconButton} from "@material-ui/core";
+import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 
@@ -39,7 +39,7 @@ export function Todolist(props: PropsType) {
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
         <h3><EditableSpan name={props.title} refreshingTitle={newTodolistTitle}/>
-            <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px"}}>
+            <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px",fontSize:"1rem"}}>
                 <Delete/>
             </IconButton>
             {/*<NewButton callback={todolistRemover} title={'X'}/>*/}
@@ -60,8 +60,8 @@ export function Todolist(props: PropsType) {
                         <IconButton size={'small'}  onClick={taskRemover}>
                             <Delete/>
                         </IconButton>
-                        {/*<NewButton callback={taskRemover} title={'X'}/>*/}
-                        <input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>
+                        <Checkbox checked={mTasks.isDone} onChange={checkHandler} size={'small'} color={'primary'}/>
+                        {/*<input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>*/}
                         <EditableSpan name={mTasks.title} refreshingTitle={refreshTitle}/>
                     </li>
                 )

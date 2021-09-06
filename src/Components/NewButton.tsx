@@ -12,6 +12,9 @@ type NewButtonPropsType = {
 export const NewButton = (props:NewButtonPropsType) => {
     // let classButton = props.filter === props.title ? "secondary" : "primary"
     return (
-      <Button  onClick={props.callback} variant={'contained'} size={'small'} color={props.filter === props.title ? "secondary" : "primary"}>{props.title}</Button>
+      <Button  onClick={props.callback} variant={'contained'} style={{margin:'0 5px 0 0'}}
+               size={'small'} color={props.filter === props.title ? "secondary" : "primary"}>
+          {props.title}
+      </Button>
     )
 }
