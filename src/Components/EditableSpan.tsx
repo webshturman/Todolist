@@ -3,10 +3,10 @@ import {TextField} from "@material-ui/core";
 
 export type EditableSpanPropsType = {
     name: string
-    refreshingTitle: (title:string) => void
+    changeTitle: (title:string) => void
 }
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = ({name,refreshingTitle}) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = ({name,changeTitle}) => {
     let [condition, setCondition] = useState<boolean>(false)
     let [title, setTitle] = useState<string>(name)
 
@@ -21,13 +21,13 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = ({name,refreshingTi
     }
     const offEditMode = () => {
         setCondition(false)
-        refreshingTitle(title)
+        changeTitle(title)
     }
 
     const keyModeHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && title) {
             setCondition(false)
-            refreshingTitle(title)
+            changeTitle(title)
         }
     }
 

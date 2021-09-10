@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {TodolistIdType, typeFilter} from "./App";
+import {typeFilter} from "./App";
 import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
 import {AddItemForm} from "./Components/AddItemForm";
@@ -22,7 +22,7 @@ type PropsType = {
     addTask: (title:string, TodolistID:string) => void
     changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
     removeTodolist: (TodolistID:string) =>void
-    refreshingTaskTitle: (id: string, title:string,  TodolistID: string) => void
+    changeTaskTitle: (id: string, title:string,  TodolistID: string) => void
     refreshTodolistTitle:(title:string, TodolistID: string)=>void
     filter:typeFilter
     TodolistID:string
@@ -38,7 +38,7 @@ export function Todolist(props: PropsType) {
 
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
-        <h3><EditableSpan name={props.title} refreshingTitle={newTodolistTitle}/>
+        <h3><EditableSpan name={props.title} changeTitle={newTodolistTitle}/>
             <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px",fontSize:"1rem"}}>
                 <Delete/>
             </IconButton>
@@ -52,7 +52,7 @@ export function Todolist(props: PropsType) {
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
                     props.changeCheckbox(e.currentTarget.checked, mTasks.id, props.TodolistID )
                 }
-                const refreshTitle = (title:string) => props.refreshingTaskTitle(mTasks.id, title, props.TodolistID)
+                const changeTitle = (title:string) => props.changeTaskTitle(mTasks.id, title, props.TodolistID)
                 let inputChecked = mTasks.isDone ? s.isDone : ''
 
                 return (
@@ -62,7 +62,7 @@ export function Todolist(props: PropsType) {
                         </IconButton>
                         <Checkbox checked={mTasks.isDone} onChange={checkHandler} size={'small'} color={'primary'}/>
                         {/*<input  type="checkbox" checked={mTasks.isDone} onChange={checkHandler}/>*/}
-                        <EditableSpan name={mTasks.title} refreshingTitle={refreshTitle}/>
+                        <EditableSpan name={mTasks.title} changeTitle={changeTitle}/>
                     </li>
                 )
             })}

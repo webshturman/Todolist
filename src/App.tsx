@@ -7,7 +7,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@material-ui/icons";
 //-----------------------------------------------------------------------------------------
 export type typeFilter = 'All' | 'Active' | 'Completed'
-export type TodolistIdType = {
+export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 export type TodolistType = {
@@ -18,13 +18,13 @@ export type TodolistType = {
 
 //-----------------------------------------------------------------------------------------
 function App() {
-    const TodolistID1 = '359f-1756'
-    const TodolistID2 = '368d-1756'
+    const TodolistID1 = v1()
+    const TodolistID2 = v1()
     const [todolists, setTodolist] = useState<Array<TodolistType>>([
         {id: TodolistID1, title: 'What to learn', filter: 'All'},
         {id: TodolistID2, title: 'What to learn Extra', filter: 'All'}
     ])
-    let [tasks, setTasks] = useState<TodolistIdType>({
+    let [tasks, setTasks] = useState<TaskStateType>({
             [TodolistID1]: [
                 {id: v1(), title: "Javascript", isDone: true},
                 {id: v1(), title: "Node JS", isDone: false},
@@ -42,7 +42,7 @@ function App() {
         //берем массив, ищем объект с нужным id, если находим - расчехляем объект и меняем значение isDone на пришедшее
         //checkbox, если id не совпадают, то объект не изменяем
     }
-    const refreshingTaskTitle = (id: string, title:string,  TodolistID: string) => {
+    const changeTaskTitle = (id: string, title:string,  TodolistID: string) => {
         setTasks({...tasks, [TodolistID]: tasks[TodolistID].map(td => td.id === id ? {...td, title: title} : td)})
     }
     const removeTask = (id: string, TodolistID: string) => {
@@ -113,7 +113,7 @@ function App() {
                                     changeCheckbox={changeCheckbox}
                                     filter={t.filter}
                                     removeTodolist={removeTodolist}
-                                    refreshingTaskTitle={refreshingTaskTitle}
+                                    changeTaskTitle={changeTaskTitle}
                                     refreshTodolistTitle={refreshTodolistTitle}
                                 />
                             </Paper>
