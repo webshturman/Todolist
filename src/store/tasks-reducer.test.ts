@@ -22,8 +22,10 @@ test('add new task', ()=> {
     const endState = tasksReducer(startState,action)
 
     expect(endState[TodolistID].length).toBe(4)
-    expect(endState['TodolistID2'].length).toBe(3)
+    expect(endState[TodolistID][0].id).toBeDefined() //проверяем, что у новой таски сгенерировалась id
     expect(endState[TodolistID][0].title).toBe(taskTitle)
+    expect(endState[TodolistID][0].isDone).toBe(false) //проверяем свойство isDone у новой таски
+    expect(endState['TodolistID2'].length).toBe(3)
 })
 
 test('remove task', ()=> {
@@ -45,8 +47,8 @@ test('remove task', ()=> {
     const endState = tasksReducer(startState,action)
 
     expect(endState[TodolistID].length).toBe(2)
-    expect(endState['TodolistID2'][1].id).toBe('2')
-    // expect(endState[TodolistID][0].title).toBe(taskTitle)
+    expect(endState['TodolistID2'].length).toBe(3)
+    expect(endState[TodolistID].every(t => t.id !== '2')).toBeTruthy()
 })
 
 test('change task title', ()=> {
@@ -69,8 +71,10 @@ test('change task title', ()=> {
     const action = ChangeTaskTitleAC(changedTaskTitleID,newTaskTitle,TodolistID)
     const endState = tasksReducer(startState,action)
 
+
     expect(endState[TodolistID][2].title).toBe(newTaskTitle)
-    expect(endState[TodolistID].length).toBe(3)
+    expect(endState['TodolistID2'][2].title).toBe("Angular") // проверяем что таска стаким же id у второго тудулиста не изменилась
+
 })
 
 test('change task checkbox', ()=> {
@@ -81,7 +85,7 @@ test('change task checkbox', ()=> {
             {id: '3', title: "React", isDone: true},
         ],
         'TodolistID2': [
-            {id: '1', title: "HTML", isDone: false},
+            {id: '1', title: "HTML", isDone: true},
             {id: '2', title: "CSS", isDone: false},
             {id: '3', title: "Angular", isDone: true}
         ]
@@ -94,5 +98,7 @@ test('change task checkbox', ()=> {
     const endState = tasksReducer(startState,action)
 
     expect(endState[TodolistID][0].isDone).toBe(false)
+    // expect(endState[TodolistID][0].isDone).toBeFalsy()
+    expect(endState['TodolistID2'][0].isDone).toBeTruthy()// проверяем что таска стаким же id у второго тудулиста не изменилась
     expect(endState[TodolistID].length).toBe(3)
 })
