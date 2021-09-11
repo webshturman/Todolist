@@ -1,5 +1,6 @@
 import {TaskStateType} from "../App";
 import {v1} from "uuid";
+import {ActionAddTodolistType} from "./todolists-reducer";
 //----------------------------------------------------------------------------------
 
 type ChangeTaskTitleActionType = {
@@ -26,6 +27,7 @@ type TaskCheckboxActionType = {
 }
 
 type ActionType = ChangeTaskTitleActionType | AddTaskActionType | RemoveTaskActionType | TaskCheckboxActionType
+    | ActionAddTodolistType
 //----------------------------------------------------------------------------------------------------
 
 
@@ -54,21 +56,26 @@ export const tasksReducer = (state: TaskStateType, action: ActionType): TaskStat
                     isDone: action.checkbox
                 } : task)
             }
+        case 'ADD-TODOLIST':
+            return {
+                ...state,
+                [action.todolistId]:[]
+            }
         default:
             return state
     }
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
-export const AddTaskAC = (taskTitle: string, TodolistID: string): AddTaskActionType => {
+export const addTaskAC = (taskTitle: string, TodolistID: string): AddTaskActionType => {
     return {type: 'ADD-TASK', title: taskTitle, TodolistID: TodolistID}
 }
-export const RemoveTaskAC = (removedTaskID: string, TodolistID: string): RemoveTaskActionType => {
+export const removeTaskAC = (removedTaskID: string, TodolistID: string): RemoveTaskActionType => {
     return {type: 'REMOVE-TASK', id: removedTaskID, TodolistID: TodolistID}
 }
-export const ChangeTaskTitleAC = (changedTaskTitleID: string, newTaskTitle: string, TodolistID: string): ChangeTaskTitleActionType => {
+export const changeTaskTitleAC = (changedTaskTitleID: string, newTaskTitle: string, TodolistID: string): ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', id: changedTaskTitleID, title: newTaskTitle, TodolistID: TodolistID}
 }
-export const ChangeCheckboxAC = (checkboxState: boolean, TaskID: string, TodolistID: string): TaskCheckboxActionType => {
+export const changeCheckboxAC = (checkboxState: boolean, TaskID: string, TodolistID: string): TaskCheckboxActionType => {
     return {type: 'CHANGE-CHECKBOX', id: TaskID, checkbox: checkboxState, TodolistID: TodolistID}
 }
