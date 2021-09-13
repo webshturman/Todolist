@@ -8,7 +8,7 @@ import {
     tasksReducer
 } from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
-import {v1} from "uuid";
+
 
 test('add new task', ()=> {
     let startState:TaskStateType = {

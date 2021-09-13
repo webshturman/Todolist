@@ -1,11 +1,6 @@
 import {v1} from "uuid";
-import {TodolistType, typeFilter} from "../App";
-import {
-    ActionAddTodolistType,
-    ActionChangeTodolistTitleType, ActionChangeTodolistType,
-    ActionRemoveTodolistType, addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC,
-    todolistsReducer
-} from "./todolists-reducer";
+import {TodolistType, typeFilter} from "../AppWithReducers";
+import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC, todolistsReducer} from "./todolists-reducer";
 
 test('add new todolist', ()=> {
     const TodolistID1 = v1()
