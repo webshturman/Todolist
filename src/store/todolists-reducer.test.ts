@@ -19,8 +19,8 @@ test('add new todolist', ()=> {
     const endTodolist = todolistsReducer(startTodolists,action)
 
     expect(endTodolist.length).toBe(3)
-    expect(endTodolist[2].title).toBe(newTodolistTitle)
-    expect(endTodolist[2].filter).toBe('All')
+    expect(endTodolist[0].title).toBe(newTodolistTitle)
+    expect(endTodolist[0].filter).toBe('All')
 })
 
 test('remove todolist', ()=> {
@@ -46,7 +46,7 @@ test('change todolist title', ()=> {
         {id: TodolistID2, title: 'What to learn Extra', filter: 'All'}
     ]
     const newTodolistTitle = 'New Todolist'
-    const action = changeTodolistTitleAC(TodolistID1, newTodolistTitle)
+    const action = changeTodolistTitleAC(newTodolistTitle, TodolistID1)
     const endTodolist = todolistsReducer(startTodolists,action)
 
     expect(endTodolist[0].title).toBe(newTodolistTitle)
@@ -60,8 +60,9 @@ test('change todolist filter', ()=> {
         {id: TodolistID2, title: 'What to learn Extra', filter: 'All'}
     ]
     const newTodolistFilter:typeFilter = 'Active'
-    const action = changeTodolistFilterAC(TodolistID1,newTodolistFilter)
+    const action = changeTodolistFilterAC(newTodolistFilter, TodolistID1)
     const endTodolist = todolistsReducer(startTodolists,action)
 
     expect(endTodolist[0].filter).toBe(newTodolistFilter)
 })
+

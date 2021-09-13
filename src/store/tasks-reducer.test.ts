@@ -7,7 +7,7 @@ import {
     removeTaskAC,
     tasksReducer
 } from "./tasks-reducer";
-import {addTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 import {v1} from "uuid";
 
 test('add new task', ()=> {
@@ -106,7 +106,7 @@ test('change task checkbox', ()=> {
 
     expect(endState[TodolistID][0].isDone).toBe(false)
     // expect(endState[TodolistID][0].isDone).toBeFalsy()
-    expect(endState['TodolistID2'][0].isDone).toBeTruthy()// проверяем что таска стаким же id у второго тудулиста не изменилась
+    expect(endState['TodolistID2'][0].isDone).toBeTruthy()// проверяем что таска с таким же id у второго тудулиста не изменилась
     expect(endState[TodolistID].length).toBe(3)
 })
 
@@ -124,15 +124,34 @@ test('add new task array, when new todolist created', ()=> {
         ]
     }
     const newTodolistTitle = 'bla bla'
-    const todolistId = v1()
-    const action = addTodolistAC(newTodolistTitle,todolistId)
+    const action = addTodolistAC(newTodolistTitle)
+    const endState = tasksReducer(startState,action)
+    const keys = Object.keys(endState)
+    const newKey = keys.filter(k => k !=='TodolistID1' && k !=='TodolistID2')
+
+    expect(keys.length).toBe(3)
+    expect(endState[newKey[0]]).toStrictEqual([])
+})
+
+test('delete task array, when todolist removed', ()=> {
+    let startState:TaskStateType = {
+        'TodolistID1': [
+            {id: '1', title: "Javascript", isDone: true},
+            {id: '2', title: "Node JS", isDone: false},
+            {id: '3', title: "React", isDone: true},
+        ],
+        'TodolistID2': [
+            {id: '1', title: "HTML", isDone: false},
+            {id: '2', title: "CSS", isDone: false},
+            {id: '3', title: "Angular", isDone: true}
+        ]
+    }
+    const todolistId = 'TodolistID1'
+    const action = removeTodolistAC(todolistId)
     const endState = tasksReducer(startState,action)
     const keys = Object.keys(endState)
 
-    expect(keys.length).toBe(3)
-    expect(keys[2]).toBe(todolistId)
-    // expect(endState[TodolistID][0].id).toBeDefined() //проверяем, что у новой таски сгенерировалась id
-    // expect(endState[TodolistID][0].title).toBe(taskTitle)
-    // expect(endState[TodolistID][0].isDone).toBe(false) //проверяем свойство isDone у новой таски
-    // expect(endState['TodolistID2'].length).toBe(3)
+
+    expect(endState[todolistId]).toBeUndefined()
+    expect(keys.length).toBe(1)
 })

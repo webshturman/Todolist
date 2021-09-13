@@ -1,5 +1,5 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {typeFilter} from "./App";
+import React, {ChangeEvent} from 'react';
+import {typeFilter} from "./AppWithReducers";
 import {NewButton} from "./Components/NewButton";
 import s from'./App.module.css'
 import {AddItemForm} from "./Components/AddItemForm";
@@ -23,7 +23,7 @@ type PropsType = {
     changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
     removeTodolist: (TodolistID:string) =>void
     changeTaskTitle: (id: string, title:string,  TodolistID: string) => void
-    refreshTodolistTitle:(title:string, TodolistID: string)=>void
+    changeTodolistTitle:(title:string, TodolistID: string)=>void
     filter:typeFilter
     TodolistID:string
 }
@@ -32,9 +32,9 @@ type PropsType = {
 export function Todolist(props: PropsType) {
 
     const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
-    const changeTdlButton = (filter:typeFilter) => props.changeTodolist(filter,props.TodolistID)
+    const changeTdlButton = (filter:typeFilter) => props.changeTodolist(filter, props.TodolistID)
     const newAddTask = (title:string)=> props.addTask(title, props.TodolistID)
-    const newTodolistTitle = (title:string)=> props.refreshTodolistTitle(title, props.TodolistID)
+    const newTodolistTitle = (title:string)=> props.changeTodolistTitle(title, props.TodolistID)
 
 //-----------------------------------------------------------------------------------------------------------------
     return <div>

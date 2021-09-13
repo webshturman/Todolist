@@ -1,8 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from '../App.module.css'
-import {NewButton} from "./NewButton";
 import {IconButton, TextField} from "@material-ui/core";
-import {Add, AddBox, Delete} from "@material-ui/icons";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 

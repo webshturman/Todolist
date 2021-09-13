@@ -1,6 +1,6 @@
-import {TaskStateType} from "../App";
+import {TaskStateType} from "../AppWithReducers";
 import {v1} from "uuid";
-import {ActionAddTodolistType} from "./todolists-reducer";
+import {ActionAddTodolistType, ActionRemoveTodolistType} from "./todolists-reducer";
 //----------------------------------------------------------------------------------
 
 type ChangeTaskTitleActionType = {
@@ -27,7 +27,7 @@ type TaskCheckboxActionType = {
 }
 
 type ActionType = ChangeTaskTitleActionType | AddTaskActionType | RemoveTaskActionType | TaskCheckboxActionType
-    | ActionAddTodolistType
+    | ActionAddTodolistType | ActionRemoveTodolistType
 //----------------------------------------------------------------------------------------------------
 
 
@@ -61,6 +61,10 @@ export const tasksReducer = (state: TaskStateType, action: ActionType): TaskStat
                 ...state,
                 [action.todolistId]:[]
             }
+        case 'REMOVE-TODOLIST':
+            const newTasks = {...state}
+            delete newTasks[action.id]
+            return newTasks
         default:
             return state
     }

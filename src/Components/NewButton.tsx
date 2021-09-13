@@ -1,5 +1,4 @@
 import React from 'react';
-import s from '../App.module.css'
 import {Button} from "@material-ui/core";
 
 
