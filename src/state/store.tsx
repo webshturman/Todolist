@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
     todolists:todolistsReducer,
     tasks:tasksReducer
 })
-type  AppRootState = ReturnType<typeof rootReducer> // автоматически определяем тип общего стейта
+export type  AppRootState = ReturnType<typeof rootReducer> // автоматически определяем тип общего стейта
 export const store = createStore(rootReducer)
 
 // @ts-ignore

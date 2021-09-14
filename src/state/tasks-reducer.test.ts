@@ -1,5 +1,5 @@
 
-import {TaskStateType} from "../App";
+import {TaskStateType} from "../AppWithReducers";
 import {
     addTaskAC,
     changeCheckboxAC,
