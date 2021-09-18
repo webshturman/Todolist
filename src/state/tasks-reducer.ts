@@ -31,16 +31,16 @@ type ActionType = ChangeTaskTitleActionType | AddTaskActionType | RemoveTaskActi
 //----------------------------------------------------------------------------------------------------
 
 const initialState: TaskStateType  = {
-    [TodolistID1]: [
-        {id: v1(), title: "Javascript", isDone: true},
-        {id: v1(), title: "Node JS", isDone: false},
-        {id: v1(), title: "React", isDone: true},
-    ],
-    [TodolistID2]: [
-        {id: v1(), title: "HTML", isDone: false},
-        {id: v1(), title: "CSS", isDone: false},
-        {id: v1(), title: "Angular", isDone: true}
-    ]
+    // [TodolistID1]: [
+    //     {id: v1(), title: "Javascript", isDone: true},
+    //     {id: v1(), title: "Node JS", isDone: false},
+    //     {id: v1(), title: "React", isDone: true},
+    // ],
+    // [TodolistID2]: [
+    //     {id: v1(), title: "HTML", isDone: false},
+    //     {id: v1(), title: "CSS", isDone: false},
+    //     {id: v1(), title: "Angular", isDone: true}
+    // ]
 }
 
 export const tasksReducer = (state: TaskStateType = initialState, action: ActionType): TaskStateType => {

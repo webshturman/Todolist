@@ -9,7 +9,6 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
-    todolistsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, changeCheckboxAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -29,21 +28,10 @@ export type TodolistType = {
 export function AppWithReducers() {
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootState, Array<TodolistType>>((state)=>state.todolists)
-    const tasks = useSelector<AppRootState, TaskStateType>((state)=> state.tasks)
 
 
-    const changeCheckbox = (checkbox: boolean, id: string, TodolistID: string) => {
-        dispatch(changeCheckboxAC(checkbox, id, TodolistID))
-    }
-    const changeTaskTitle = (id: string, title:string,  TodolistID: string) => {
-        dispatch(changeTaskTitleAC(id, title,  TodolistID))
-    }
-    const removeTask = (id: string, TodolistID: string) => {
-        dispatch(removeTaskAC(id, TodolistID))
-    }
-    const addTask = (title: string, TodolistID: string) => {
-        dispatch(addTaskAC(title, TodolistID))
-    }
+
+
     const changeTodolist = (value: typeFilter, TodolistID: string) => {
         dispatch(changeTodolistFilterAC(value, TodolistID))
 
@@ -84,27 +72,21 @@ export function AppWithReducers() {
                 </Grid>
                 <Grid container spacing={1}>
                     {todolists.map(t => {
-                        let filteredTasks = tasks[t.id]
-                        if (t.filter === 'Active') {
-                            filteredTasks = tasks[t.id].filter(f => !f.isDone)
-                        }
-                        if (t.filter === 'Completed') {
-                            filteredTasks = tasks[t.id].filter(f => f.isDone)
-                        }
+
                         return <Grid item>
                             <Paper elevation={10} style={{padding:"15px"}}>
                                 <Todolist
                                     key={t.id}
                                     TodolistID={t.id}
                                     title={t.title}
-                                    tasks={filteredTasks}
-                                    removeTask={removeTask}
+                                    // tasks={filteredTasks}
+                                    // removeTask={removeTask}
                                     changeTodolist={changeTodolist}
-                                    addTask={addTask}
-                                    changeCheckbox={changeCheckbox}
+                                    // addTask={addTask}
+                                    // changeCheckbox={changeCheckbox}
                                     filter={t.filter}
                                     removeTodolist={removeTodolist}
-                                    changeTaskTitle={changeTaskTitle}
+                                    // changeTaskTitle={changeTaskTitle}
                                     changeTodolistTitle={changeTodolistTitle}
                                 />
                             </Paper>
