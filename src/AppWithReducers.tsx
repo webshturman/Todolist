@@ -79,14 +79,9 @@ export function AppWithReducers() {
                                     key={t.id}
                                     TodolistID={t.id}
                                     title={t.title}
-                                    // tasks={filteredTasks}
-                                    // removeTask={removeTask}
                                     changeTodolist={changeTodolist}
-                                    // addTask={addTask}
-                                    // changeCheckbox={changeCheckbox}
                                     filter={t.filter}
                                     removeTodolist={removeTodolist}
-                                    // changeTaskTitle={changeTaskTitle}
                                     changeTodolistTitle={changeTodolistTitle}
                                 />
                             </Paper>

@@ -19,13 +19,8 @@ export type TaskType = {
 
 type PropsType = {
     title: string
-    // tasks: Array<TaskType>
-    // removeTask: (id:string, TodolistID:string) => void
     changeTodolist: (filter:typeFilter, TodolistID: string) =>void
-    // addTask: (title:string, TodolistID:string) => void
-    // changeCheckbox:(checkbox:boolean, id:string, TodolistID:string) => void
     removeTodolist: (TodolistID:string) =>void
-    // changeTaskTitle: (id: string, title:string,  TodolistID: string) => void
     changeTodolistTitle:(title:string, TodolistID: string)=>void
     filter:typeFilter
     TodolistID:string
@@ -37,23 +32,10 @@ export function Todolist(props: PropsType) {
     const tasks = useSelector<AppRootState, Array<TaskType>>((state)=> state.tasks[props.TodolistID])
     //берем таски для конкретного тудулиста
 
-    const changeCheckbox = (checkbox: boolean, id: string, TodolistID: string) => {
-        dispatch(changeCheckboxAC(checkbox, id, TodolistID))
-    }
-    const changeTaskTitle = (id: string, title:string,  TodolistID: string) => {
-        dispatch(changeTaskTitleAC(id, title,  TodolistID))
-    }
-    const removeTask = (id: string, TodolistID: string) => {
-        dispatch(removeTaskAC(id, TodolistID))
-    }
-    const addTask = (title: string, TodolistID: string) => {
-        dispatch(addTaskAC(title, TodolistID))
-    }
     //----------------------------------------------------------------------------------------------------
     const todolistRemover = ()=> props.removeTodolist(props.TodolistID)
     const changeTdlButton = (filter:typeFilter) => props.changeTodolist(filter, props.TodolistID)
     const newAddTask = (title:string)=> dispatch(addTaskAC(title, props.TodolistID))
-    // const newAddTask = (title:string)=> props.addTask(title, props.TodolistID)
     const newTodolistTitle = (title:string)=> props.changeTodolistTitle(title, props.TodolistID)
     let filteredTasks = tasks
     if (props.filter === 'Active') {
@@ -76,13 +58,10 @@ export function Todolist(props: PropsType) {
 
             {filteredTasks.map((mTasks) => {
                 const taskRemover = ()=> dispatch(removeTaskAC(mTasks.id,props.TodolistID))
-                // const taskRemover = ()=> props.removeTask(mTasks.id,props.TodolistID)
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
                     dispatch(changeCheckboxAC(e.currentTarget.checked, mTasks.id, props.TodolistID))
-                    // props.changeCheckbox(e.currentTarget.checked, mTasks.id, props.TodolistID )
                 }
                 const changeTitle = (title:string) => dispatch(changeTaskTitleAC(mTasks.id, title, props.TodolistID))
-                // const changeTitle = (title:string) => props.changeTaskTitle(mTasks.id, title, props.TodolistID)
                 let inputChecked = mTasks.isDone ? s.isDone : ''
 
                 return (
