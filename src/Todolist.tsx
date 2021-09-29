@@ -37,6 +37,7 @@ export function Todolist(props: PropsType) {
     const changeTdlButton = (filter:typeFilter) => props.changeTodolist(filter, props.TodolistID)
     const newAddTask = (title:string)=> dispatch(addTaskAC(title, props.TodolistID))
     const newTodolistTitle = (title:string)=> props.changeTodolistTitle(title, props.TodolistID)
+
     let filteredTasks = tasks
     if (props.filter === 'Active') {
         filteredTasks = tasks.filter(f => !f.isDone)
@@ -59,7 +60,7 @@ export function Todolist(props: PropsType) {
             {filteredTasks.map((mTasks) => {
                 const taskRemover = ()=> dispatch(removeTaskAC(mTasks.id,props.TodolistID))
                 const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
-                    dispatch(changeCheckboxAC(e.currentTarget.checked, mTasks.id, props.TodolistID))
+                    dispatch(changeCheckboxAC(mTasks.id, e.currentTarget.checked, props.TodolistID))
                 }
                 const changeTitle = (title:string) => dispatch(changeTaskTitleAC(mTasks.id, title, props.TodolistID))
                 let inputChecked = mTasks.isDone ? s.isDone : ''

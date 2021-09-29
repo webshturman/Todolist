@@ -92,6 +92,6 @@ export const removeTaskAC = (removedTaskID: string, TodolistID: string): RemoveT
 export const changeTaskTitleAC = (changedTaskTitleID: string, newTaskTitle: string, TodolistID: string): ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', id: changedTaskTitleID, title: newTaskTitle, TodolistID: TodolistID}
 }
-export const changeCheckboxAC = (checkboxState: boolean, TaskID: string, TodolistID: string): TaskCheckboxActionType => {
+export const changeCheckboxAC = (TaskID: string, checkboxState: boolean,  TodolistID: string): TaskCheckboxActionType => {
     return {type: 'CHANGE-CHECKBOX', id: TaskID, checkbox: checkboxState, TodolistID: TodolistID}
 }
