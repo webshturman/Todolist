@@ -6,7 +6,7 @@ export type EditableSpanPropsType = {
     changeTitle: (title:string) => void
 }
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = ({name,changeTitle}) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({name,changeTitle}) => {
     let [condition, setCondition] = useState<boolean>(false)
     let [title, setTitle] = useState<string>(name)
 
@@ -42,16 +42,9 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = ({name,changeTitle}
                             onKeyPress={keyModeHandler}>
 
                 </TextField>
-                // <input
-                //     type="text"
-                //     value={title}
-                //     onBlur={offEditMode}
-                //     autoFocus={true}
-                //     onChange={changeTitleHandler}
-                //     onKeyPress={keyModeHandler}/>
                 : <span onDoubleClick={onEditMode}>{name}</span>
             }
         </>
     );
-};
+});
 

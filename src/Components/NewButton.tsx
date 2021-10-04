@@ -8,7 +8,8 @@ type NewButtonPropsType = {
     filter?:string
 }
 
-export const NewButton = (props:NewButtonPropsType) => {
+export const NewButton = React.memo((props:NewButtonPropsType) => {
+    console.log('Show Button')
     // let classButton = props.filter === props.title ? "secondary" : "primary"
     return (
       <Button  onClick={props.callback} variant={'contained'} style={{margin:'0 5px 0 0'}}
@@ -16,4 +17,4 @@ export const NewButton = (props:NewButtonPropsType) => {
           {props.title}
       </Button>
     )
-}
+})

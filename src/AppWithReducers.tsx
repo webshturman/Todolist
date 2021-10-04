@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {AddItemForm} from "./Components/AddItemForm";
@@ -10,7 +10,6 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC,
 } from "./state/todolists-reducer";
-import {addTaskAC, changeCheckboxAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 //-----------------------------------------------------------------------------------------
@@ -26,28 +25,24 @@ export type TodolistType = {
 
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {
+    console.log('App Render')
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootState, Array<TodolistType>>((state)=>state.todolists)
 
-
-
-
-    const changeTodolist = (value: typeFilter, TodolistID: string) => {
+    const changeTodolist = useCallback((value: typeFilter, TodolistID: string) => {
         dispatch(changeTodolistFilterAC(value, TodolistID))
-
-    }
-    const changeTodolistTitle = (title:string, TodolistID: string) => {
+    }, [dispatch])
+    const changeTodolistTitle = useCallback((title:string, TodolistID: string) => {
         dispatch(changeTodolistTitleAC(title, TodolistID))
-
-    }
-    const removeTodolist = (TodolistID: string) => {
+    },[dispatch])
+    const removeTodolist = useCallback((TodolistID: string) => {
         const action = removeTodolistAC(TodolistID)
         dispatch(action)
-    }
-    const addTodoList = (title: string) =>{
+    },[dispatch])
+    const addTodoList = useCallback((title: string) =>{
         const action = addTodolistAC(title)
         dispatch(action)
-    }
+    },[dispatch])
     return (
         <div className="App">
             <AppBar position="static">
@@ -73,7 +68,7 @@ export function AppWithReducers() {
                 <Grid container spacing={1}>
                     {todolists.map(t => {
 
-                        return <Grid item>
+                        return <Grid item key={t.id}>
                             <Paper elevation={10} style={{padding:"15px"}}>
                                 <Todolist
                                     key={t.id}
