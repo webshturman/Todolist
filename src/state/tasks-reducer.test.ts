@@ -101,7 +101,7 @@ test('change task checkbox', ()=> {
     const checkboxState = false
     const TaskID = '1'
 
-    const action = changeCheckboxAC (checkboxState,TaskID, TodolistID)
+    const action = changeCheckboxAC(checkboxState,TaskID, TodolistID)
     const endState = tasksReducer(startState,action)
 
     expect(endState[TodolistID][0].isDone).toBe(false)

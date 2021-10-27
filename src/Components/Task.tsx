@@ -21,7 +21,7 @@ export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) 
     })
     const taskRemover = ()=> dispatch(removeTaskAC(TaskID,TodolistID))
     const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeCheckboxAC(TaskID, e.currentTarget.checked, TodolistID))
+        dispatch(changeCheckboxAC(e.currentTarget.checked, TaskID, TodolistID))
     }
     const changeTitle = (title:string) => dispatch(changeTaskTitleAC(TaskID, title, TodolistID))
     let inputChecked = task.isDone ? s.isDone : ''

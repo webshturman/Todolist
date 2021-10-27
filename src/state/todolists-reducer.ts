@@ -1,37 +1,35 @@
-import {TodolistType, typeFilter} from "../AppWithReducers";
+
 import {v1} from "uuid";
 //--------------------------------------------------------------
-export type ActionAddTodolistType = {
-    type:'ADD-TODOLIST'
-    title:string
-    todolistId:string
+export type ActionAddTodolistType = ReturnType<typeof addTodolistAC>;
+export type ActionRemoveTodolistType = ReturnType<typeof removeTodolistAC>;
+export type ActionChangeTodolistTitleType = ReturnType<typeof changeTodolistTitleAC>;
+export type ActionChangeTodolistType = ReturnType<typeof changeTodolistFilterAC>;
+export type ActionGetTodolistType = ReturnType<typeof getTodosAC>;
+//----------------------------------------------------------------------------
+export type typeFilter = 'All' | 'Active' | 'Completed'
+
+export type TodolistType = {
+    id: string
+    title: string
 }
-export type ActionRemoveTodolistType = {
-    type:'REMOVE-TODOLIST'
-    id:string
-}
-export type ActionChangeTodolistTitleType = {
-    type:'CHANGE-TODOLIST-TITLE'
-    id:string
-    title:string
-}
-export type ActionChangeTodolistType = {
-    type:'CHANGE-TODOLIST-FILTER'
-    filter:typeFilter
-    id:string
+export type TodolistStateType = TodolistType & {
+    filter: typeFilter
 }
 
-type ActionType = ActionAddTodolistType | ActionRemoveTodolistType | ActionChangeTodolistTitleType | ActionChangeTodolistType
+type ActionType = ActionAddTodolistType | ActionRemoveTodolistType
+    | ActionChangeTodolistTitleType | ActionChangeTodolistType
+    | ActionGetTodolistType
 //---------------------------------------------------------------------------------
 export const TodolistID1 = v1()
 export const TodolistID2 = v1()
-// const initialState:Array<TodolistType>  = [
-//     {id: TodolistID1, title: 'What to learn', filter: 'All'},
-//     {id: TodolistID2, title: 'What to learn Extra', filter: 'All'}
-// ]
-const initialState:Array<TodolistType>  = []
-export const todolistsReducer = (state:Array<TodolistType> = initialState, action:ActionType):Array<TodolistType> => {
+
+const initialState:Array<TodolistStateType>  = []
+export const todolistsReducer = (state:Array<TodolistStateType> = initialState, action:ActionType):Array<TodolistStateType> => {
     switch(action.type) {
+        case "GET-TODOS":
+            // debugger
+            return action.todolists.map(tl=> ({...tl,filter:'All'}))
         case 'ADD-TODOLIST':
             return [{id:action.todolistId, title:action.title, filter:'All'}, ...state]
         case 'REMOVE-TODOLIST':
@@ -46,15 +44,19 @@ export const todolistsReducer = (state:Array<TodolistType> = initialState, actio
 }
 
 //----------------------------------------------------------------------
-export const addTodolistAC = (newTodolistTitle:string):ActionAddTodolistType => {
-    return {type:'ADD-TODOLIST', title:newTodolistTitle, todolistId:v1()}
+export const addTodolistAC = (newTodolistTitle:string) => {
+    return {type:'ADD-TODOLIST', title:newTodolistTitle, todolistId:v1()} as const
 }
-export const removeTodolistAC = (todolistId:string):ActionRemoveTodolistType => {
-    return {type:'REMOVE-TODOLIST', id:todolistId}
+export const removeTodolistAC = (todolistId:string) => {
+    return {type:'REMOVE-TODOLIST', id:todolistId} as const
 }
-export const changeTodolistTitleAC = (newTodolistTitle:string,todolistId:string,):ActionChangeTodolistTitleType => {
-    return {type:'CHANGE-TODOLIST-TITLE', title:newTodolistTitle, id:todolistId}
+export const changeTodolistTitleAC = (newTodolistTitle:string,todolistId:string,) => {
+    return {type:'CHANGE-TODOLIST-TITLE', title:newTodolistTitle, id:todolistId} as const
 }
-export const changeTodolistFilterAC = (newTodolistFilter:typeFilter,todolistId:string):ActionChangeTodolistType => {
-    return {type:'CHANGE-TODOLIST-FILTER', filter:newTodolistFilter, id:todolistId}
+export const changeTodolistFilterAC = (newTodolistFilter:typeFilter,todolistId:string) => {
+    return {type:'CHANGE-TODOLIST-FILTER', filter:newTodolistFilter, id:todolistId} as const
+}
+
+export const getTodosAC = (todolists:Array<TodolistType> ) => {
+    return {type:'GET-TODOS', todolists} as const
 }

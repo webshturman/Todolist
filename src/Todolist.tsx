@@ -1,5 +1,4 @@
 import React, {useCallback} from 'react';
-import {typeFilter} from "./AppWithReducers";
 import {NewButton} from "./Components/NewButton";
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
@@ -9,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {addTaskAC} from "./state/tasks-reducer";
 import Task from "./Components/Task";
+import {typeFilter} from "./state/todolists-reducer";
 
 
 export type TaskType = {
@@ -28,7 +28,9 @@ type PropsType = {
 //-----------------------------------------------------------------------------------
 
 export const Todolist = React.memo((props: PropsType) => {
-    console.log('TodolistRender')
+
+
+
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, Array<TaskType>>((state)=> state.tasks[props.TodolistID])
     //берем таски для конкретного тудулиста
