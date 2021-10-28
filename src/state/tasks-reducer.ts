@@ -3,36 +3,21 @@ import {v1} from "uuid";
 import {
     ActionAddTodolistType,
     ActionGetTodolistType,
-    ActionRemoveTodolistType,
-    todolistsReducer
+    ActionRemoveTodolistType, TodolistType,
 } from "./todolists-reducer";
+import {Dispatch} from "redux";
+import {TaskAPI, TaskObjectType} from "../api/task-api";
+
 //----------------------------------------------------------------------------------
 
-type ChangeTaskTitleActionType = {
-    type: 'CHANGE-TASK-TITLE'
-    id: string
-    title: string
-    TodolistID: string
-}
-type AddTaskActionType = {
-    type: 'ADD-TASK'
-    title: string
-    TodolistID: string
-}
-type RemoveTaskActionType = {
-    type: 'REMOVE-TASK'
-    id: string
-    TodolistID: string
-}
-type TaskCheckboxActionType = {
-    type: 'CHANGE-CHECKBOX'
-    checkbox: boolean
-    id: string
-    TodolistID: string
-}
+export type ChangeTaskTitleActionType= ReturnType<typeof changeTaskTitleAC>;
+export type AddTaskActionType= ReturnType<typeof addTaskAC>;
+export type RemoveTaskActionType= ReturnType<typeof removeTaskAC>;
+export type TaskCheckboxActionType= ReturnType<typeof changeCheckboxAC>;
+export type GetTasksActionType = ReturnType<typeof getTaskAC>;
 
 type ActionType = ChangeTaskTitleActionType | AddTaskActionType | RemoveTaskActionType | TaskCheckboxActionType
-    | ActionAddTodolistType | ActionRemoveTodolistType | ActionGetTodolistType
+    | ActionAddTodolistType | ActionRemoveTodolistType | ActionGetTodolistType | GetTasksActionType
 //----------------------------------------------------------------------------------------------------
 
 const initialState: TaskStateType  = {
@@ -50,10 +35,14 @@ const initialState: TaskStateType  = {
 
 export const tasksReducer = (state: TaskStateType = initialState, action: ActionType): TaskStateType => {
     switch (action.type) {
+        case "GET-TASKS":
+            let copyTask = {...state}
+            copyTask[action.TodolistID]=action.tasks
+            return copyTask
         case "GET-TODOS":
             // debugger
             let copyTasks = {...state};
-            action.todolists.forEach(tl=> {
+            action.todolists.forEach((tl:TodolistType)=> {
                 copyTasks[tl.id]=[]
             });
             return copyTasks;
@@ -95,15 +84,29 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------
-export const addTaskAC = (taskTitle: string, TodolistID: string): AddTaskActionType => {
-    return {type: 'ADD-TASK', title: taskTitle, TodolistID: TodolistID}
+export const getTaskAC = (TodolistID: string, tasks:Array<TaskObjectType>) => {
+    return {type: 'GET-TASKS', TodolistID,tasks} as const
 }
-export const removeTaskAC = (removedTaskID: string, TodolistID: string): RemoveTaskActionType => {
-    return {type: 'REMOVE-TASK', id: removedTaskID, TodolistID: TodolistID}
+export const addTaskAC = (taskTitle: string, TodolistID: string) => {
+    return {type: 'ADD-TASK', title: taskTitle, TodolistID: TodolistID} as const
 }
-export const changeTaskTitleAC = (changedTaskTitleID: string, newTaskTitle: string, TodolistID: string): ChangeTaskTitleActionType => {
-    return {type: 'CHANGE-TASK-TITLE', id: changedTaskTitleID, title: newTaskTitle, TodolistID: TodolistID}
+export const removeTaskAC = (removedTaskID: string, TodolistID: string) => {
+    return {type: 'REMOVE-TASK', id: removedTaskID, TodolistID: TodolistID} as const
 }
-export const changeCheckboxAC = (checkboxState: boolean, TaskID: string,  TodolistID: string): TaskCheckboxActionType => {
-    return {type: 'CHANGE-CHECKBOX', checkbox: checkboxState, id: TaskID,  TodolistID: TodolistID}
+export const changeTaskTitleAC = (changedTaskTitleID: string, newTaskTitle: string, TodolistID: string) => {
+    return {type: 'CHANGE-TASK-TITLE', id: changedTaskTitleID, title: newTaskTitle, TodolistID: TodolistID} as const
+}
+export const changeCheckboxAC = (checkboxState: boolean, TaskID: string,  TodolistID: string)=> {
+    return {type: 'CHANGE-CHECKBOX', checkbox: checkboxState, id: TaskID,  TodolistID: TodolistID} as const
+}
+
+//------------------------------------------------------------------------------------------
+export const getTaskTC =(todolistID:string)=> {
+    return (dispatch:Dispatch)=> {
+        // debugger
+        TaskAPI.getTsk(todolistID)
+            .then((res)=>{
+                dispatch(getTaskAC(todolistID, res.data.items))
+            })
+    }
 }

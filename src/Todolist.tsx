@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {NewButton} from "./Components/NewButton";
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
@@ -6,7 +6,7 @@ import {IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {addTaskAC} from "./state/tasks-reducer";
+import {addTaskAC, getTaskTC} from "./state/tasks-reducer";
 import Task from "./Components/Task";
 import {typeFilter} from "./state/todolists-reducer";
 
@@ -14,7 +14,7 @@ import {typeFilter} from "./state/todolists-reducer";
 export type TaskType = {
     id: string
     title: string
-    isDone: boolean
+    isDone?: boolean
 }
 
 type PropsType = {
@@ -34,6 +34,10 @@ export const Todolist = React.memo((props: PropsType) => {
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, Array<TaskType>>((state)=> state.tasks[props.TodolistID])
     //берем таски для конкретного тудулиста
+
+    useEffect(()=>{
+        dispatch(getTaskTC(props.TodolistID))
+    },[])
 
     //----------------------------------------------------------------------------------------------------
     const todolistRemover = useCallback(()=> props.removeTodolist(props.TodolistID),[props.removeTodolist, props.TodolistID])

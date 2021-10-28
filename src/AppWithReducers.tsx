@@ -7,12 +7,12 @@ import {Menu} from "@material-ui/icons";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, getTodosAC,
+    changeTodolistTitleAC, getTodosTC,
     removeTodolistAC, TodolistStateType, typeFilter,
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {TodoListAPI} from "./api/todolist-api";
+
 //-----------------------------------------------------------------------------------------
 
 export type TaskStateType = {
@@ -23,11 +23,7 @@ export type TaskStateType = {
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {
     useEffect(()=> {
-        TodoListAPI.getTodos()
-        .then((res)=>{
-            // debugger
-            dispatch(getTodosAC(res.data))
-        })
+        dispatch(getTodosTC())
     },[])
 
     const dispatch = useDispatch()
@@ -40,12 +36,10 @@ export function AppWithReducers() {
         dispatch(changeTodolistTitleAC(title, TodolistID))
     },[dispatch])
     const removeTodolist = useCallback((TodolistID: string) => {
-        const action = removeTodolistAC(TodolistID)
-        dispatch(action)
+        dispatch(removeTodolistAC(TodolistID))
     },[dispatch])
     const addTodoList = useCallback((title: string) =>{
-        const action = addTodolistAC(title)
-        dispatch(action)
+        dispatch(addTodolistAC(title))
     },[dispatch])
     return (
         <div className="App">
