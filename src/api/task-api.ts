@@ -17,7 +17,7 @@ export const TaskAPI = {
     updateTsk(todolistID:string,taskID:string,title:string){
         return instance.put<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks/${taskID}`,{title})
     },
-    deleteTsk(todolistID:string,taskID:string){
+    deleteTsk(taskID:string, todolistID:string){
         return instance.delete<CommonTaskType>(`todo-lists/${todolistID}/tasks/${taskID}`)
     },
 }

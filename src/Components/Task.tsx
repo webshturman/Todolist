@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "./EditableSpan";
-import {changeCheckboxAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
+import {changeCheckboxAC, changeTaskTitleAC, deleteTaskTC} from "../state/tasks-reducer";
 import s from "../App.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
@@ -19,7 +19,7 @@ export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) 
     const task = useSelector<AppRootState, TaskType>(state => {
        return  state.tasks[TodolistID].filter((ts:TaskType) => ts.id === TaskID)[0]
     })
-    const taskRemover = ()=> dispatch(removeTaskAC(TaskID,TodolistID))
+    const taskRemover = ()=> dispatch(deleteTaskTC(TaskID,TodolistID))
     const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
         dispatch(changeCheckboxAC(e.currentTarget.checked, TaskID, TodolistID))
     }

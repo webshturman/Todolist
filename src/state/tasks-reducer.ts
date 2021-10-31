@@ -7,16 +7,17 @@ import {
 } from "./todolists-reducer";
 import {Dispatch} from "redux";
 import {TaskAPI, TaskObjectType} from "../api/task-api";
+import Task from "../Components/Task";
 
 //----------------------------------------------------------------------------------
 
 export type ChangeTaskTitleActionType= ReturnType<typeof changeTaskTitleAC>;
 export type AddTaskActionType= ReturnType<typeof addTaskAC>;
-export type RemoveTaskActionType= ReturnType<typeof removeTaskAC>;
+export type DeleteTaskActionType= ReturnType<typeof deleteTaskAC>;
 export type TaskCheckboxActionType= ReturnType<typeof changeCheckboxAC>;
 export type GetTasksActionType = ReturnType<typeof getTaskAC>;
 
-type ActionType = ChangeTaskTitleActionType | AddTaskActionType | RemoveTaskActionType | TaskCheckboxActionType
+type ActionType = ChangeTaskTitleActionType | AddTaskActionType | DeleteTaskActionType | TaskCheckboxActionType
     | ActionAddTodolistType | ActionRemoveTodolistType | ActionGetTodolistType | GetTasksActionType
 //----------------------------------------------------------------------------------------------------
 
@@ -51,8 +52,8 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
                 ...state,
                 [action.TodolistID]: [{id: v1(), title: action.title, isDone: false}, ...state[action.TodolistID]]
             }
-        case 'REMOVE-TASK':
-            return {...state, [action.TodolistID]: state[action.TodolistID].filter(task => task.id !== action.id)}
+        case 'DELETE-TASK':
+            return {...state, [action.todolistID]: state[action.todolistID].filter(task => task.id !== action.taskID)}
         case 'CHANGE-TASK-TITLE':
             return {
                 ...state,
@@ -90,8 +91,8 @@ export const getTaskAC = (TodolistID: string, tasks:Array<TaskObjectType>) => {
 export const addTaskAC = (taskTitle: string, TodolistID: string) => {
     return {type: 'ADD-TASK', title: taskTitle, TodolistID: TodolistID} as const
 }
-export const removeTaskAC = (removedTaskID: string, TodolistID: string) => {
-    return {type: 'REMOVE-TASK', id: removedTaskID, TodolistID: TodolistID} as const
+export const deleteTaskAC = (taskID:string, todolistID:string) => {
+    return {type: 'DELETE-TASK', taskID, todolistID} as const
 }
 export const changeTaskTitleAC = (changedTaskTitleID: string, newTaskTitle: string, TodolistID: string) => {
     return {type: 'CHANGE-TASK-TITLE', id: changedTaskTitleID, title: newTaskTitle, TodolistID: TodolistID} as const
@@ -110,3 +111,9 @@ export const getTaskTC =(todolistID:string)=> {
             })
     }
 }
+export const deleteTaskTC=(taskID:string, todolistID:string)=>(dispatch:Dispatch)=>{
+        TaskAPI.deleteTsk(taskID, todolistID)
+            .then((res)=>{
+                dispatch(deleteTaskAC(taskID, todolistID))
+            })
+    }
