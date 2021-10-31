@@ -3,7 +3,7 @@ import {v1} from "uuid";
 import {
     ActionAddTodolistType,
     ActionGetTodolistType,
-    ActionRemoveTodolistType, TodolistType,
+    ActionRemoveTodolistType,
 } from "./todolists-reducer";
 import {Dispatch} from "redux";
 import {TaskAPI, TaskObjectType} from "../api/task-api";
@@ -42,7 +42,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
         case "GET-TODOS":
             // debugger
             let copyTasks = {...state};
-            action.todolists.forEach((tl:TodolistType)=> {
+            action.todolist.forEach((tl)=> {
                 copyTasks[tl.id]=[]
             });
             return copyTasks;

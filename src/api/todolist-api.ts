@@ -9,11 +9,11 @@ const instance = axios.create({
 })
 
 
-type Created = { item: GetTodosType };//Alt-Ctrl-V
+type Created = { item: TodolistType };//Alt-Ctrl-V
 
 export const TodoListAPI = {
     getTodos(){
-        return instance.get<Array<GetTodosType>>('todo-lists')
+        return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodos(title:string){
         return instance.post<CommonTodosType<Created>>('todo-lists',{title})
@@ -26,10 +26,10 @@ export const TodoListAPI = {
     },
 }
 
-type GetTodosType={
+export type TodolistType={
     id:string
-    addedDate:string
-    order:string
+    addedDate?:string
+    order?:string
     title:string
 }
 type CommonTodosType<T={}> ={

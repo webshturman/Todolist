@@ -1,7 +1,7 @@
 
 import {v1} from "uuid";
 import {AppRootState} from "./store";
-import {TodoListAPI} from "../api/todolist-api";
+import {TodoListAPI, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 //--------------------------------------------------------------
 export type ActionAddTodolistType = ReturnType<typeof addTodolistAC>;
@@ -12,10 +12,10 @@ export type ActionGetTodolistType = ReturnType<typeof getTodosAC>;
 //----------------------------------------------------------------------------
 export type typeFilter = 'All' | 'Active' | 'Completed'
 
-export type TodolistType = {
-    id: string
-    title: string
-}
+// export type TodolistType = {
+//     id: string
+//     title: string
+// }
 export type TodolistStateType = TodolistType & {
     filter: typeFilter
 }
@@ -28,11 +28,11 @@ export const TodolistID1 = v1()
 export const TodolistID2 = v1()
 
 const initialState:Array<TodolistStateType>  = []
-export const todolistsReducer = (state:Array<TodolistStateType> = initialState, action:ActionType):Array<TodolistStateType> => {
+export const todolistReducer = (state:Array<TodolistStateType> = initialState, action:ActionType):Array<TodolistStateType> => {
     switch(action.type) {
         case "GET-TODOS":
             // debugger
-            return action.todolists.map(tl=> ({...tl,filter:'All'}))
+            return action.todolist.map( (tl) => ({...tl,filter:'All'}))
         case 'ADD-TODOLIST':
             return [{id:action.todolistId, title:action.title, filter:'All'}, ...state]
         case 'REMOVE-TODOLIST':
@@ -60,8 +60,11 @@ export const changeTodolistFilterAC = (newTodolistFilter:typeFilter,todolistId:s
     return {type:'CHANGE-TODOLIST-FILTER', filter:newTodolistFilter, id:todolistId} as const
 }
 
-export const getTodosAC = (todolists:Array<TodolistType> ) => {
-    return {type:'GET-TODOS', todolists} as const
+// export const getTodosAC = (todolists:Array<TodolistType> ) => {
+//     return {type:'GET-TODOS', todolists} as const
+// }
+export const getTodosAC = (todolist:Array<TodolistType> ) => {
+    return {type:'GET-TODOS', todolist} as const
 }
 //------------------------------------------------------------
 export const getTodosTC = () => (dispatch:Dispatch, getState: ()=>AppRootState) =>{
