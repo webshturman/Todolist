@@ -7,7 +7,6 @@ import {
 } from "./todolists-reducer";
 import {Dispatch} from "redux";
 import {TaskAPI, TaskObjectType} from "../api/task-api";
-import Task from "../Components/Task";
 
 //----------------------------------------------------------------------------------
 
@@ -50,7 +49,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.TodolistID]: [{id: v1(), title: action.title, isDone: false}, ...state[action.TodolistID]]
+                [action.todolistID]: [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistID]]
             }
         case 'DELETE-TASK':
             return {...state, [action.todolistID]: state[action.todolistID].filter(task => task.id !== action.taskID)}
@@ -88,8 +87,8 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
 export const getTaskAC = (TodolistID: string, tasks:Array<TaskObjectType>) => {
     return {type: 'GET-TASKS', TodolistID,tasks} as const
 }
-export const addTaskAC = (taskTitle: string, TodolistID: string) => {
-    return {type: 'ADD-TASK', title: taskTitle, TodolistID: TodolistID} as const
+export const addTaskAC = (todolistID:string,title:string) => {
+    return {type: 'ADD-TASK', todolistID,title} as const
 }
 export const deleteTaskAC = (taskID:string, todolistID:string) => {
     return {type: 'DELETE-TASK', taskID, todolistID} as const
@@ -117,3 +116,9 @@ export const deleteTaskTC=(taskID:string, todolistID:string)=>(dispatch:Dispatch
                 dispatch(deleteTaskAC(taskID, todolistID))
             })
     }
+export const addTaskTC=(todolistID:string,title:string)=>(dispatch:Dispatch)=>{
+    TaskAPI.createTsk(todolistID,title)
+        .then((res)=>{
+            dispatch(addTaskAC(todolistID,title))
+        })
+}

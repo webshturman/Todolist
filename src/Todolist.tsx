@@ -6,7 +6,7 @@ import {IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {addTaskAC, getTaskTC} from "./state/tasks-reducer";
+import {addTaskAC, addTaskTC, getTaskTC} from "./state/tasks-reducer";
 import Task from "./Components/Task";
 import {typeFilter} from "./state/todolists-reducer";
 
@@ -28,9 +28,6 @@ type PropsType = {
 //-----------------------------------------------------------------------------------
 
 export const Todolist = React.memo((props: PropsType) => {
-
-
-
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, Array<TaskType>>((state)=> state.tasks[props.TodolistID])
     //берем таски для конкретного тудулиста
@@ -42,7 +39,7 @@ export const Todolist = React.memo((props: PropsType) => {
     //----------------------------------------------------------------------------------------------------
     const todolistRemover = useCallback(()=> props.removeTodolist(props.TodolistID),[props.removeTodolist, props.TodolistID])
     const changeTdlButton = useCallback((filter:typeFilter) => props.changeTodolist(filter, props.TodolistID), [props.changeTodolist,props.TodolistID])
-    const newAddTask = useCallback((title:string)=> dispatch(addTaskAC(title, props.TodolistID)),[dispatch])
+    const newAddTask = useCallback((title:string)=> dispatch(addTaskTC(props.TodolistID,title)),[dispatch])
     const newTodolistTitle = useCallback((title:string)=> props.changeTodolistTitle(title, props.TodolistID),[props.changeTodolistTitle, props.TodolistID])
 
     let filteredTasks = tasks

@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "./EditableSpan";
@@ -19,7 +19,7 @@ export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) 
     const task = useSelector<AppRootState, TaskType>(state => {
        return  state.tasks[TodolistID].filter((ts:TaskType) => ts.id === TaskID)[0]
     })
-    const taskRemover = ()=> dispatch(deleteTaskTC(TaskID,TodolistID))
+    const taskRemover = useCallback(()=> dispatch(deleteTaskTC(TaskID,TodolistID)), [])
     const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
         dispatch(changeCheckboxAC(e.currentTarget.checked, TaskID, TodolistID))
     }
