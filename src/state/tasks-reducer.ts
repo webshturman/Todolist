@@ -49,7 +49,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.todolistID]: [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistID]]
+                [action.task.todoListId]: [{id: action.task.id, title: action.task.title, isDone: false}, ...state[action.task.todoListId]]
             }
         case 'DELETE-TASK':
             return {...state, [action.todolistID]: state[action.todolistID].filter(task => task.id !== action.taskID)}
@@ -87,8 +87,8 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
 export const getTaskAC = (TodolistID: string, tasks:Array<TaskObjectType>) => {
     return {type: 'GET-TASKS', TodolistID,tasks} as const
 }
-export const addTaskAC = (todolistID:string,title:string) => {
-    return {type: 'ADD-TASK', todolistID,title} as const
+export const addTaskAC = (task:TaskObjectType) => {
+    return {type: 'ADD-TASK', task} as const
 }
 export const deleteTaskAC = (taskID:string, todolistID:string) => {
     return {type: 'DELETE-TASK', taskID, todolistID} as const
@@ -101,15 +101,13 @@ export const changeCheckboxAC = (checkboxState: boolean, TaskID: string,  Todoli
 }
 
 //------------------------------------------------------------------------------------------
-export const getTaskTC =(todolistID:string)=> {
-    return (dispatch:Dispatch)=> {
+export const getTaskTC =(todolistID:string)=> (dispatch:Dispatch)=> {
         // debugger
         TaskAPI.getTsk(todolistID)
             .then((res)=>{
                 dispatch(getTaskAC(todolistID, res.data.items))
             })
     }
-}
 export const deleteTaskTC=(taskID:string, todolistID:string)=>(dispatch:Dispatch)=>{
         TaskAPI.deleteTsk(taskID, todolistID)
             .then((res)=>{
@@ -117,8 +115,13 @@ export const deleteTaskTC=(taskID:string, todolistID:string)=>(dispatch:Dispatch
             })
     }
 export const addTaskTC=(todolistID:string,title:string)=>(dispatch:Dispatch)=>{
+    debugger
     TaskAPI.createTsk(todolistID,title)
         .then((res)=>{
-            dispatch(addTaskAC(todolistID,title))
+
+            dispatch(addTaskAC(res.data))
         })
 }
+// export const updateTaskTC=(todolistID:string,taskID:string,title:string)=>(dispatch:Dispatch)=>{
+//
+// }
