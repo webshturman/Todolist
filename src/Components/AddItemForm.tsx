@@ -7,7 +7,7 @@ export type InputType = {
 
 }
 export const AddItemForm: React.FC<InputType> = React.memo(({ addItem}) => {
-    console.log('AddItemForm')
+    // console.log('AddItemForm')
     let [title, setTitle] = useState('')
     let [error, setError] = useState(false)
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {

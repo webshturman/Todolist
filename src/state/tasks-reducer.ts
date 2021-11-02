@@ -47,10 +47,13 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
             });
             return copyTasks;
         case 'ADD-TASK':
-            return {
-                ...state,
-                [action.task.todoListId]: [{id: action.task.id, title: action.task.title, isDone: false}, ...state[action.task.todoListId]]
-            }
+            let taskCopy = {...state};
+            taskCopy[action.task.todoListId] = [action.task, ...taskCopy[action.task.todoListId]];
+            // return {
+            //     ...state,
+            //   [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]
+            // }
+            return taskCopy
         case 'DELETE-TASK':
             return {...state, [action.todolistID]: state[action.todolistID].filter(task => task.id !== action.taskID)}
         case 'CHANGE-TASK-TITLE':
@@ -118,7 +121,6 @@ export const addTaskTC=(todolistID:string,title:string)=>(dispatch:Dispatch)=>{
     debugger
     TaskAPI.createTsk(todolistID,title)
         .then((res)=>{
-
             dispatch(addTaskAC(res.data))
         })
 }
