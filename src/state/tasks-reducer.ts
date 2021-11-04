@@ -5,7 +5,8 @@ import {
     ActionRemoveTodolistType,
 } from "./todolists-reducer";
 import {Dispatch} from "redux";
-import {TaskAPI, TaskObjectType, TaskStatuses} from "../api/task-api";
+import {TaskAPI, TaskObjectType, TaskStatuses, UpdateTasksModelType} from "../api/task-api";
+import {AppRootState} from "./store";
 
 //----------------------------------------------------------------------------------
 
@@ -118,9 +119,13 @@ export const addTaskTC = (todolistID: string, title: string) => (dispatch: Dispa
             dispatch(addTaskAC(res.data.data.item))
         })
 }
-export const updateTaskTC = (todolistID: string, taskID: string, title: string) => (dispatch: Dispatch) => {
-    TaskAPI.updateTsk(todolistID, taskID, title)
-        .then((res) => {
-            dispatch(changeTaskTitleAC(res.data.data.item))
-        })
+export const updateTaskTC = (todolistID: string, taskID: string, model:UpdateTasksModelType) => {
+    return (dispatch: Dispatch, getState:()=> AppRootState) => {
+        let tasks = getState().tasks;
+        let
+        TaskAPI.updateTsk(todolistID, taskID, model)
+            .then((res) => {
+                dispatch(changeTaskTitleAC(res.data.data.item))
+            })
+    }
 }

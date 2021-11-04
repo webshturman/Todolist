@@ -14,14 +14,23 @@ export const TaskAPI = {
     createTsk(todolistID:string,title:string){
         return instance.post<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks`,{title})
     },
-    updateTsk(todolistID:string,taskID:string,title:string){
-        return instance.put<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks/${taskID}`,{title})
+    updateTsk(todolistID:string,taskID:string,model:UpdateTasksModelType){
+        return instance.put<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks/${taskID}`,model)
     },
     deleteTsk(taskID:string, todolistID:string){
         return instance.delete<CommonTaskType>(`todo-lists/${todolistID}/tasks/${taskID}`)
     },
 }
 
+
+export type UpdateTasksModelType ={
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
 
 type GetTaskType={
     items:Array<TaskObjectType>
@@ -31,7 +40,7 @@ type GetTaskType={
 export type TaskObjectType={
     description: string
     title: string
-    completed: boolean
+    // completed: boolean
     status: TaskStatuses
     priority:TaskPriorities
     startDate: Date
