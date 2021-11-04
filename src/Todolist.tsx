@@ -9,13 +9,14 @@ import {AppRootState} from "./state/store";
 import {addTaskAC, addTaskTC, getTaskTC} from "./state/tasks-reducer";
 import Task from "./Components/Task";
 import {typeFilter} from "./state/todolists-reducer";
+import {TaskObjectType, TaskStatuses} from "./api/task-api";
 
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone?: boolean
-}
+// export type TaskType = {
+//     id: string
+//     title: string
+//     isDone?: boolean
+// }
 
 type PropsType = {
     title: string
@@ -29,7 +30,7 @@ type PropsType = {
 
 export const Todolist = React.memo((props: PropsType) => {
     const dispatch = useDispatch()
-    const tasks = useSelector<AppRootState, Array<TaskType>>((state)=> state.tasks[props.TodolistID])
+    const tasks = useSelector<AppRootState, Array<TaskObjectType>>((state)=> state.tasks[props.TodolistID])
     //берем таски для конкретного тудулиста
 
     useEffect(()=>{
@@ -44,10 +45,10 @@ export const Todolist = React.memo((props: PropsType) => {
 
     let filteredTasks = tasks
     if (props.filter === 'Active') {
-        filteredTasks = tasks.filter(f => !f.isDone)
+        filteredTasks = tasks.filter(f => f.status === TaskStatuses.New)
     }
     if (props.filter === 'Completed') {
-        filteredTasks = tasks.filter(f => f.isDone)
+        filteredTasks = tasks.filter(f => f.status === TaskStatuses.Completed)
     }
 //-----------------------------------------------------------------------------------------------------------------
     return <div>

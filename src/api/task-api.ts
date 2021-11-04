@@ -12,7 +12,7 @@ export const TaskAPI = {
         return instance.get<GetTaskType>(`todo-lists/${todolistID}/tasks`)
     },
     createTsk(todolistID:string,title:string){
-        return instance.post<TaskObjectType>(`todo-lists/${todolistID}/tasks`,{title})
+        return instance.post<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks`,{title})
     },
     updateTsk(todolistID:string,taskID:string,title:string){
         return instance.put<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks/${taskID}`,{title})
@@ -32,8 +32,8 @@ export type TaskObjectType={
     description: string
     title: string
     completed: boolean
-    status: number
-    priority:number
+    status: TaskStatuses
+    priority:TaskPriorities
     startDate: Date
     deadline: Date
     id: string
@@ -45,4 +45,18 @@ type CommonTaskType<T={}>={
     data:T
     resultCode:number
     messages: Array<string>
+}
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
 }

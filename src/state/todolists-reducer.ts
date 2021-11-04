@@ -31,7 +31,6 @@ const initialState:Array<TodolistStateType>  = []
 export const todolistReducer = (state:Array<TodolistStateType> = initialState, action:ActionType):Array<TodolistStateType> => {
     switch(action.type) {
         case "GET-TODOS":
-            // debugger
             return action.todolist.map( (tl) => ({...tl,filter:'All'}))
         case 'ADD-TODOLIST':
             return [{id:action.todolistId, title:action.title, filter:'All'}, ...state]
@@ -60,9 +59,7 @@ export const changeTodolistFilterAC = (newTodolistFilter:typeFilter,todolistId:s
     return {type:'CHANGE-TODOLIST-FILTER', filter:newTodolistFilter, id:todolistId} as const
 }
 
-// export const getTodosAC = (todolists:Array<TodolistType> ) => {
-//     return {type:'GET-TODOS', todolists} as const
-// }
+
 export const getTodosAC = (todolist:Array<TodolistType> ) => {
     return {type:'GET-TODOS', todolist} as const
 }

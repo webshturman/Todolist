@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {AddItemForm} from "./Components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
@@ -12,13 +12,14 @@ import {
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
+import {TaskObjectType} from "./api/task-api";
 
 //-----------------------------------------------------------------------------------------
 
-export type TaskStateType = {
-    [key: string]: Array<TaskType>
-}
 
+export type TaskStateType = {
+    [key: string]: Array<TaskObjectType>
+}
 
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {
@@ -67,7 +68,7 @@ export function AppWithReducers() {
                     {todolists.map(t => {
 
                         return <Grid item key={t.id}>
-                            <Paper elevation={10} style={{padding:"15px"}}>
+                            <Paper elevation={10} style={{padding:"10px"}}>
                                 <Todolist
                                     key={t.id}
                                     TodolistID={t.id}
