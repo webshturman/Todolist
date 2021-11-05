@@ -4,32 +4,24 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 export type InputType = {
     addItem: (title: string) => void
-
 }
 export const AddItemForm: React.FC<InputType> = React.memo(({ addItem}) => {
     // console.log('AddItemForm')
     let [title, setTitle] = useState('')
     let [error, setError] = useState(false)
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-        let currentValue = e.currentTarget.value
-        if (!currentValue.trim()) {
-            setError(true)
-            // setTitle('')
-        } else {
-            setTitle(currentValue)
-            setError(false)
-        }
+        setTitle(e.currentTarget.value)
     }
     const onKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && title) {
-            addItem(title)
-            setTitle('')
+        if (e.key === 'Enter') {
+            addHandler()
         }
     }
     const addHandler = () => {
-        if (title) {
+        if (title.trim() !== '') {
             addItem(title)
             setTitle('')
+            setError(false)
         } else {
             setError(true)
         }
