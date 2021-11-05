@@ -43,8 +43,8 @@ export type TaskObjectType={
     // completed: boolean
     status: TaskStatuses
     priority:TaskPriorities
-    startDate: Date
-    deadline: Date
+    startDate: string
+    deadline: string
     id: string
     todoListId: string
     order: number

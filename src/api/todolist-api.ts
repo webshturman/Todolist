@@ -18,7 +18,7 @@ export const TodoListAPI = {
     createTodos(title:string){
         return instance.post<CommonTodosType<Created>>('todo-lists',{title})
     },
-    updateTodos(todolistId:string, title:string){
+    updateTodos(title:string, todolistId:string){
         return instance.put<CommonTodosType>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodos(todolistId:string){

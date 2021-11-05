@@ -2,7 +2,7 @@ import React, {ChangeEvent, useCallback} from 'react';
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "./EditableSpan";
-import {changeCheckboxAC, deleteTaskTC, updateTaskTC} from "../state/tasks-reducer";
+import {deleteTaskTC, updateTaskTC} from "../state/tasks-reducer";
 import s from "../App.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
@@ -22,9 +22,10 @@ export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) 
     const taskRemover = useCallback(()=> dispatch(deleteTaskTC(TaskID,TodolistID)), [])
     const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
         let checkedData = e.currentTarget.checked;
-        dispatch(changeCheckboxAC(checkedData ? TaskStatuses.Completed : TaskStatuses.New, TaskID, TodolistID))
+        let status = checkedData ? TaskStatuses.Completed : TaskStatuses.New
+        dispatch(updateTaskTC(TodolistID, TaskID,{status}))
     }
-    const changeTitle = useCallback((title:string) => dispatch(updateTaskTC(TodolistID, TaskID, title)),[])
+    const changeTitle = useCallback((title:string) => dispatch(updateTaskTC(TodolistID, TaskID, {title})),[])
     let inputChecked = task.status === TaskStatuses.Completed ? s.isDone : ''
     return (
         <>

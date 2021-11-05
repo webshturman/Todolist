@@ -12,12 +12,6 @@ import {typeFilter} from "./state/todolists-reducer";
 import {TaskObjectType, TaskStatuses} from "./api/task-api";
 
 
-// export type TaskType = {
-//     id: string
-//     title: string
-//     isDone?: boolean
-// }
-
 type PropsType = {
     title: string
     changeTodolist: (filter:typeFilter, TodolistID: string) =>void
@@ -37,7 +31,7 @@ export const Todolist = React.memo((props: PropsType) => {
         dispatch(getTaskTC(props.TodolistID))
     },[])
 
-    //----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
     const todolistRemover = useCallback(()=> props.removeTodolist(props.TodolistID),[props.removeTodolist, props.TodolistID])
     const changeTdlButton = useCallback((filter:typeFilter) => props.changeTodolist(filter, props.TodolistID), [props.changeTodolist,props.TodolistID])
     const newAddTask = useCallback((title:string)=> dispatch(addTaskTC(props.TodolistID,title)),[dispatch])
