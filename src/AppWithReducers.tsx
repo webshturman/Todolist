@@ -31,7 +31,7 @@ export function AppWithReducers() {
     },[])
 
     const dispatch = useDispatch()
-    const todolists = useSelector<AppRootState, Array<TodolistStateType>>((state)=>state.todolists)
+    const todoLists = useSelector<AppRootState, Array<TodolistStateType>>((state)=>state.todoLists)
 
     const changeTodolist = useCallback((value: typeFilter, TodolistID: string) => {
         dispatch(changeTodolistFilterAC(value, TodolistID))
@@ -68,16 +68,16 @@ export function AppWithReducers() {
                     <AddItemForm addItem={addTodoList}/>
                 </Grid>
                 <Grid container spacing={1}>
-                    {todolists.map(t => {
+                    {todoLists.map(todolist => {
 
-                        return <Grid item key={t.id}>
+                        return <Grid item key={todolist.id}>
                             <Paper elevation={10} style={{padding:"10px"}}>
                                 <Todolist
-                                    key={t.id}
-                                    TodolistID={t.id}
-                                    title={t.title}
+                                    key={todolist.id}
+                                    TodolistID={todolist.id}
+                                    title={todolist.title}
                                     changeTodolist={changeTodolist}
-                                    filter={t.filter}
+                                    filter={todolist.filter}
                                     removeTodolist={removeTodolist}
                                     changeTodolistTitle={changeTodolistTitle}
                                 />

@@ -4,9 +4,8 @@ import {
     ActionGetTodolistType,
     ActionRemoveTodolistType,
 } from "./todolists-reducer";
-import {Dispatch} from "redux";
 import {TaskAPI, TaskObjectType, TaskPriorities, TaskStatuses, UpdateTasksModelType} from "../api/task-api";
-import {AppActionsType, AppRootState, AppThunk} from "./store";
+import { AppRootState, AppThunk} from "./store";
 
 //----------------------------------------------------------------------------------
 

@@ -6,7 +6,7 @@ import {IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {addTaskAC, addTaskTC, getTaskTC} from "./state/tasks-reducer";
+import {addTaskTC, getTaskTC} from "./state/tasks-reducer";
 import Task from "./Components/Task";
 import {typeFilter} from "./state/todolists-reducer";
 import {TaskObjectType, TaskStatuses} from "./api/task-api";

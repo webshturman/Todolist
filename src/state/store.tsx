@@ -5,7 +5,7 @@ import thunk, {ThunkAction} from "redux-thunk";
 
 
 const rootReducer = combineReducers({
-    todolists:todolistReducer,
+    todoLists:todolistReducer,
     tasks:tasksReducer
 })
 
