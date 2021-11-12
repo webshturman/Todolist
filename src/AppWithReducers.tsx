@@ -6,7 +6,6 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@material-ui/icons";
 import {
     addTodosTC,
-    changeTodolistFilterAC,
     deleteTodosTC,
     getTodosTC,
     TodolistStateType,
@@ -16,6 +15,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {TaskObjectType} from "./api/task-api";
+import {changeTodolistFilterAC} from "./state/actions";
 
 //-----------------------------------------------------------------------------------------
 

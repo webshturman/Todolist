@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import {NewButton} from "./Components/NewButton";
 import {AddItemForm} from "./Components/AddItemForm";
 import {EditableSpan} from "./Components/EditableSpan";
@@ -22,31 +22,32 @@ type PropsType = {
 }
 //-----------------------------------------------------------------------------------
 
-export const Todolist = React.memo((props: PropsType) => {
+export const Todolist: FC<PropsType> = React.memo(({title, changeTodolist, removeTodolist,
+                                                       changeTodolistTitle, filter, TodolistID,}) => {
     const dispatch = useDispatch()
-    const tasks = useSelector<AppRootState, Array<TaskObjectType>>((state)=> state.tasks[props.TodolistID])
+    const tasks = useSelector<AppRootState, Array<TaskObjectType>>((state)=> state.tasks[TodolistID])
     //берем таски для конкретного тудулиста
 
     useEffect(()=>{
-        dispatch(getTaskTC(props.TodolistID))
+        dispatch(getTaskTC(TodolistID))
     },[])
 
 //-----------------------------------------------------------------------------------------------------------------------
-    const todolistRemover = useCallback(()=> props.removeTodolist(props.TodolistID),[props.removeTodolist, props.TodolistID])
-    const changeTdlButton = useCallback((filter:typeFilter) => props.changeTodolist(filter, props.TodolistID), [props.changeTodolist,props.TodolistID])
-    const newAddTask = useCallback((title:string)=> dispatch(addTaskTC(props.TodolistID,title)),[dispatch])
-    const newTodolistTitle = useCallback((title:string)=> props.changeTodolistTitle(title, props.TodolistID),[props.changeTodolistTitle, props.TodolistID])
+    const todolistRemover = useCallback(()=> removeTodolist(TodolistID),[removeTodolist, TodolistID])
+    const changeTdlButton = useCallback((filter:typeFilter) => changeTodolist(filter, TodolistID), [changeTodolist,TodolistID])
+    const newAddTask = useCallback((title:string)=> dispatch(addTaskTC(TodolistID,title)),[dispatch])
+    const newTodolistTitle = useCallback((title:string)=> changeTodolistTitle(title, TodolistID),[changeTodolistTitle, TodolistID])
 
     let filteredTasks = tasks
-    if (props.filter === 'Active') {
-        filteredTasks = tasks.filter(f => f.status === TaskStatuses.New)
+    if (filter === 'Active') {
+        filteredTasks = tasks.filter(task => task.status === TaskStatuses.New)
     }
-    if (props.filter === 'Completed') {
-        filteredTasks = tasks.filter(f => f.status === TaskStatuses.Completed)
+    if (filter === 'Completed') {
+        filteredTasks = tasks.filter(task => task.status === TaskStatuses.Completed)
     }
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
-        <h3><EditableSpan name={props.title} changeTitle={newTodolistTitle}/>
+        <h3><EditableSpan name={title} changeTitle={newTodolistTitle}/>
             <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px",fontSize:"1rem"}}>
                 <Delete/>
             </IconButton>
@@ -56,14 +57,14 @@ export const Todolist = React.memo((props: PropsType) => {
         <ul style={{listStyle:"none", padding:"0"}}>
 
             {filteredTasks.map((mTasks) => {
-                return <Task key={mTasks.id} TaskID={mTasks.id} TodolistID={props.TodolistID}/>
+                return <Task key={mTasks.id} TaskID={mTasks.id} TodolistID={TodolistID}/>
             })}
         </ul>
 
         <div>
-            <NewButton callback={useCallback(()=> changeTdlButton('All'),[changeTdlButton])} title={'All'} filter={props.filter}/>
-            <NewButton callback={useCallback(()=> changeTdlButton('Active'),[changeTdlButton])} title={'Active'} filter={props.filter}/>
-            <NewButton callback={useCallback(()=> changeTdlButton('Completed'),[changeTdlButton])} title={'Completed'} filter={props.filter}/>
+            <NewButton callback={useCallback(()=> changeTdlButton('All'),[changeTdlButton])} title={'All'} filter={filter}/>
+            <NewButton callback={useCallback(()=> changeTdlButton('Active'),[changeTdlButton])} title={'Active'} filter={filter}/>
+            <NewButton callback={useCallback(()=> changeTdlButton('Completed'),[changeTdlButton])} title={'Completed'} filter={filter}/>
         </div>
     </div>
 })

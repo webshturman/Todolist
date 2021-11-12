@@ -14,7 +14,6 @@ export type SingleTaskType ={
 }
 
 export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) => {
-    // console.log('Task Render')
     const dispatch = useDispatch()
     const task = useSelector<AppRootState, TaskObjectType>(state => {
        return  state.tasks[TodolistID].filter((ts) => ts.id === TaskID)[0]
