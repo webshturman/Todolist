@@ -1,4 +1,4 @@
-import {v1} from "uuid";
+
 import {AppThunk} from "./store";
 import {TodoListAPI, TodolistType} from "../api/todolist-api";
 import {
@@ -17,8 +17,7 @@ export type TodolistStateType = TodolistType & {
     filter: typeFilter
 }
 //---------------------------------------------------------------------------------
-export const TodolistID1 = v1()
-export const TodolistID2 = v1()
+
 
 const initialState: Array<TodolistStateType> = []
 export const todolistReducer = (state: Array<TodolistStateType> = initialState, action: ActionTodolistType): Array<TodolistStateType> => {

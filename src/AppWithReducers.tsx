@@ -1,8 +1,18 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {Todolist} from './Todolist';
+
 import {AddItemForm} from "./Components/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    LinearProgress,
+    Paper,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
     addTodosTC,
@@ -16,6 +26,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {TaskObjectType} from "./api/task-api";
 import {changeTodolistFilterAC} from "./state/actions";
+import {Todolist} from "./Components/Todolist";
+import {ErrorSnackBar} from "./Components/ErrorSnackBar";
 
 //-----------------------------------------------------------------------------------------
 
@@ -48,6 +60,7 @@ export function AppWithReducers() {
     return (
         <div className="App">
             <AppBar position="static">
+                <ErrorSnackBar/>
                 <Toolbar style={{justifyContent: "space-between"}}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu/>
@@ -62,6 +75,7 @@ export function AppWithReducers() {
                         Login
                     </Button>
                 </Toolbar>
+                <LinearProgress />
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding:"15px 0", justifyContent: "center"}}>
@@ -69,7 +83,6 @@ export function AppWithReducers() {
                 </Grid>
                 <Grid container spacing={1}>
                     {todoLists.map(todolist => {
-
                         return <Grid item key={todolist.id}>
                             <Paper elevation={10} style={{padding:"10px"}}>
                                 <Todolist

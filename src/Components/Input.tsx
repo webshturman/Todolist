@@ -1,13 +1,13 @@
-import React, {ChangeEvent, useState,KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 
-export type InputType ={
+export type InputFormType ={
     addTask: (title:string) => void
     title:string
     setTitle: (title:string) => void
 }
 
 
-export const Input = (props:InputType) => {
+export const Input = (props:InputFormType) => {
 
     const changeHandler = (event:ChangeEvent<HTMLInputElement>) => {
         props.setTitle(event.currentTarget.value)
