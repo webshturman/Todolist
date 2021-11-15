@@ -10,6 +10,7 @@ import {EditableSpan} from "./EditableSpan";
 import {AddItemForm} from "./AddItemForm";
 import Task from "./Task";
 import {NewButton} from "./NewButton";
+import {RequestStatusType} from "../state/loader-reducer";
 
 
 type PropsType = {
@@ -19,11 +20,12 @@ type PropsType = {
     changeTodolistTitle:(title:string, TodolistID: string)=>void
     filter:typeFilter
     TodolistID:string
+    entityStatus:RequestStatusType
 }
 //-----------------------------------------------------------------------------------
 
 export const Todolist: FC<PropsType> = React.memo(({title, changeTodolist, removeTodolist,
-                                                       changeTodolistTitle, filter, TodolistID,}) => {
+                                                       changeTodolistTitle, filter, TodolistID, entityStatus}) => {
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, Array<TaskObjectType>>((state)=> state.tasks[TodolistID])
     //берем таски для конкретного тудулиста
@@ -48,7 +50,8 @@ export const Todolist: FC<PropsType> = React.memo(({title, changeTodolist, remov
 //-----------------------------------------------------------------------------------------------------------------
     return <div>
         <h3><EditableSpan name={title} changeTitle={newTodolistTitle}/>
-            <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px",fontSize:"1rem"}}>
+            <IconButton size={'medium'}  onClick={todolistRemover} style={{padding:"5px",fontSize:"1rem"}}
+            disabled={entityStatus==='loading'}>
                 <Delete/>
             </IconButton>
         </h3>

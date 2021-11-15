@@ -28,6 +28,7 @@ import {TaskObjectType} from "./api/task-api";
 import {changeTodolistFilterAC} from "./state/actions";
 import {Todolist} from "./Components/Todolist";
 import {ErrorSnackBar} from "./Components/ErrorSnackBar";
+import {RequestStatusType} from "./state/loader-reducer";
 
 //-----------------------------------------------------------------------------------------
 
@@ -44,6 +45,7 @@ export function AppWithReducers() {
 
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootState, Array<TodolistStateType>>((state)=>state.todoLists)
+    const status = useSelector<AppRootState, RequestStatusType>((state)=>state.loader.status)
 
     const changeTodolist = useCallback((value: typeFilter, TodolistID: string) => {
         dispatch(changeTodolistFilterAC(value, TodolistID))
@@ -75,7 +77,7 @@ export function AppWithReducers() {
                         Login
                     </Button>
                 </Toolbar>
-                <LinearProgress />
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding:"15px 0", justifyContent: "center"}}>
@@ -88,6 +90,7 @@ export function AppWithReducers() {
                                 <Todolist
                                     key={todolist.id}
                                     TodolistID={todolist.id}
+                                    entityStatus={todolist.entityStatus}
                                     title={todolist.title}
                                     changeTodolist={changeTodolist}
                                     filter={todolist.filter}
