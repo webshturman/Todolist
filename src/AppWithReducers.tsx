@@ -47,6 +47,7 @@ export function AppWithReducers() {
     const todoLists = useSelector<AppRootState, Array<TodolistStateType>>((state)=>state.todoLists)
     const status = useSelector<AppRootState, RequestStatusType>((state)=>state.loader.status)
 
+
     const changeTodolist = useCallback((value: typeFilter, TodolistID: string) => {
         dispatch(changeTodolistFilterAC(value, TodolistID))
     }, [dispatch])

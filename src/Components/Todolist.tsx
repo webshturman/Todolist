@@ -55,7 +55,7 @@ export const Todolist: FC<PropsType> = React.memo(({title, changeTodolist, remov
                 <Delete/>
             </IconButton>
         </h3>
-        <AddItemForm  addItem={newAddTask} />
+        <AddItemForm  addItem={newAddTask} entityStatus={entityStatus}/>
 
         <ul style={{listStyle:"none", padding:"0"}}>
 
