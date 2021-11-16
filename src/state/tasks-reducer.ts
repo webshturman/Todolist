@@ -4,8 +4,9 @@ import {TaskAPI, TaskPriorities, TaskStatuses, UpdateTasksModelType} from "../ap
 import { AppRootState, AppThunk} from "./store";
 import {
     ACTIONS_TYPE, ActionTaskType, addTaskAC, ChangeLoadingStatusAC, deleteTaskAC,
-    getTaskAC, SetErrorMessageAC, updateTaskAC
+    getTaskAC, updateTaskAC
 } from "./actions";
+import {handleNetworkError, handleServerError} from "../utils/error-utils";
 
 //----------------------------------------------------------------------------------
 
@@ -97,17 +98,13 @@ export const addTaskTC = (todolistID: string, title: string): AppThunk => async 
         const res = await TaskAPI.createTsk(todolistID, title)
         if(res.data.resultCode === 0){
             dispatch(addTaskAC(res.data.data.item))
+            dispatch(ChangeLoadingStatusAC('succeeded'))
         } else{
-            if(res.data.messages.length){
-                dispatch(SetErrorMessageAC(res.data.messages[0]))
-            }
-            else{
-                dispatch(SetErrorMessageAC("some error"))
-            }
+            handleServerError(res.data,dispatch)
         }
-        dispatch(ChangeLoadingStatusAC('succeeded'))
-    } catch (e) {
 
+    } catch (error:any) {
+        handleNetworkError(error,dispatch)
     }
 }
 

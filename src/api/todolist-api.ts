@@ -16,13 +16,13 @@ export const TodoListAPI = {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodos(title:string){
-        return instance.post<CommonTodosType<Created>>('todo-lists',{title})
+        return instance.post<ResponseType<Created>>('todo-lists',{title})
     },
     updateTodos(title:string, todolistId:string){
-        return instance.put<CommonTodosType>(`todo-lists/${todolistId}`, {title})
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodos(todolistId:string){
-        return instance.delete<CommonTodosType>(`todo-lists/${todolistId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     },
 }
 
@@ -32,7 +32,7 @@ export type TodolistType={
     order?:string
     title:string
 }
-type CommonTodosType<T={}> ={
+export type ResponseType<T={}> ={
     resultCode: number
     fieldsErrors: Array<string>
     messages: Array<string>

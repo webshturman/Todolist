@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ResponseType} from "./todolist-api";
 
 export const instance = axios.create({
     baseURL:'https://social-network.samuraijs.com/api/1.1/',
@@ -12,13 +13,13 @@ export const TaskAPI = {
         return instance.get<GetTaskType>(`todo-lists/${todolistID}/tasks`)
     },
     createTsk(todolistID:string,title:string){
-        return instance.post<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks`,{title})
+        return instance.post<ResponseType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks`,{title})
     },
     updateTsk(todolistID:string,taskID:string,model:UpdateTasksModelType){
-        return instance.put<CommonTaskType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks/${taskID}`,model)
+        return instance.put<ResponseType<{item:TaskObjectType}>>(`todo-lists/${todolistID}/tasks/${taskID}`,model)
     },
     deleteTsk(taskID:string, todolistID:string){
-        return instance.delete<CommonTaskType>(`todo-lists/${todolistID}/tasks/${taskID}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistID}/tasks/${taskID}`)
     },
 }
 
@@ -50,11 +51,7 @@ export type TaskObjectType={
     order: number
     addedDate: Date
 }
-type CommonTaskType<T={}>={
-    data:T
-    resultCode:number
-    messages: Array<string>
-}
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
