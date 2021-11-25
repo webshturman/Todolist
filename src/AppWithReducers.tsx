@@ -1,7 +1,14 @@
 import React from 'react';
 import './App.css';
-import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import IconButton from "@material-ui/core/IconButton";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import {Menu} from "@material-ui/icons";
+
 import {useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {ErrorSnackBar} from "./Components/ErrorSnackBar";
@@ -37,10 +44,9 @@ export function AppWithReducers() {
             </AppBar>
             <Container fixed>
                 <Routes>
-                    <Route path={'/'}>
-                        <TodoListContainer/>
-                    </Route>
-                    <Route path={'login'} element={<Login/>}/>
+                    <Route path={'/'} element={<TodoListContainer/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/*'} element={<div>404</div>}/>
                 </Routes>
             </Container>
         </div>
