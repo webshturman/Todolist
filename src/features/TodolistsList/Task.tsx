@@ -1,12 +1,13 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {EditableSpan} from "./EditableSpan";
-import {deleteTaskTC, updateTaskTC} from "../state/tasks-reducer";
-import s from "../App.module.css";
+import s from '../../App.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "../state/store";
-import {TaskObjectType, TaskStatuses} from "../api/task-api";
+import {AppRootState} from "../../state/store";
+import {TaskObjectType, TaskStatuses} from "../../api/task-api";
+import {deleteTaskTC, updateTaskTC} from "../../state/tasks-reducer";
+import {EditableSpan} from "../../Components/EditableSpan";
+
 
 export type SingleTaskType ={
     TaskID:string
@@ -16,7 +17,8 @@ export type SingleTaskType ={
 export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) => {
     const dispatch = useDispatch()
     const task = useSelector<AppRootState, TaskObjectType>(state => {
-       return  state.tasks[TodolistID].filter((ts) => ts.id === TaskID)[0]
+        // return state.tasks[TodolistID].find(task=>task.id === TaskID)
+       return  state.tasks[TodolistID].filter(ts => ts.id === TaskID)[0]
     })
     const taskRemover = useCallback(()=> dispatch(deleteTaskTC(TaskID,TodolistID)), [])
     const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,6 @@
-import {TaskStateType} from "../AppWithReducers";
 
-import {TaskAPI, TaskPriorities, TaskStatuses, UpdateTasksModelType} from "../api/task-api";
+
+import {TaskAPI, TaskPriorities, TaskStateType, TaskStatuses, UpdateTasksModelType} from "../api/task-api";
 import { AppRootState, AppThunk} from "./store";
 import {
     ACTIONS_TYPE, ActionTaskType, addTaskAC, ChangeLoadingStatusAC, deleteTaskAC,

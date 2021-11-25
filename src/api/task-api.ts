@@ -52,6 +52,9 @@ export type TaskObjectType={
     addedDate: Date
 }
 
+export type TaskStateType = {
+    [key: string]: Array<TaskObjectType>
+}
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
