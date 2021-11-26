@@ -18,6 +18,7 @@ export enum ACTIONS_TYPE {
     CHANGE_LOADER_STATUS='AppWithReducers/CHANGE_LOADER_STATUS',
     SET_ERROR_MESSAGE='AppWithReducers/SET_ERROR_MESSAGE',
     CHANGE_ENTITY_STATUS='Todolist/CHANGE_ENTITY_STATUS',
+    GET_AUTH_STATUS='Auth/GET_AUTH_STATUS',
 }
 
 
@@ -80,16 +81,11 @@ export const deleteTaskAC = (taskID: string, todolistID: string) => {
 export const updateTaskAC = (todolistID: string, taskID: string, model: UpdateDomainTasksModelType) => {
     return {type: ACTIONS_TYPE.UPDATE_TASKS_TYPE, todolistID, taskID, model} as const
 }
-// export const updateTaskAC = (task: TaskObjectType) => {
-//     return {type: 'UPDATE-TASK', task} as const
-// }
+
 
 
 //------------------------------LOADER-------------------------------------------------------------
 export type ActionLoaderType = ReturnType<typeof ChangeLoadingStatusAC> | ReturnType<typeof SetErrorMessageAC>
-// export type ActionLoaderType = ChangeLoadingStatusActionType | SetErrorMessageActionType
-// export type ChangeLoadingStatusActionType = ReturnType<typeof ChangeLoadingStatusAC>;
-// export type SetErrorMessageActionType = ReturnType<typeof SetErrorMessageAC>;
 
 export const ChangeLoadingStatusAC = (status:RequestStatusType) => {
     return {type: ACTIONS_TYPE.CHANGE_LOADER_STATUS, status} as const
@@ -97,3 +93,11 @@ export const ChangeLoadingStatusAC = (status:RequestStatusType) => {
 export const SetErrorMessageAC = (error:string | null) => {
     return {type: ACTIONS_TYPE.SET_ERROR_MESSAGE, error} as const
 }
+
+//------------------------------AUTH-------------------------------------------------------------
+export type AuthDataType = ReturnType<typeof getAuthStatus>
+
+export const getAuthStatus = (status:boolean) => {
+    return {type: ACTIONS_TYPE.GET_AUTH_STATUS, status} as const
+}
+
