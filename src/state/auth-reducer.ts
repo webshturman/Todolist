@@ -1,12 +1,12 @@
 
 import {AppThunk} from "./store";
-import {ACTIONS_TYPE, AuthDataType} from "./actions";
+import {ACTIONS_TYPE, ActionAuthDataType} from "./actions";
 
 const initialAuthState: initialAuthStateType = {
     isLoggedIn:false
 }
 
-export const authReducer = (state: initialAuthStateType = initialAuthState, action: AuthDataType): initialAuthStateType => {
+export const authReducer = (state: initialAuthStateType = initialAuthState, action: ActionAuthDataType): initialAuthStateType => {
     switch (action.type) {
         case ACTIONS_TYPE.GET_AUTH_STATUS:
             return {...state, isLoggedIn:action.status}
