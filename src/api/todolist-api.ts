@@ -9,7 +9,7 @@ export const instance = axios.create({
 })
 
 
-type Created = { item: TodolistType };//Alt-Ctrl-V
+
 
 export const TodoListAPI = {
     getTodos(){
@@ -38,3 +38,5 @@ export type ResponseType<T={}> ={
     messages: Array<string>
     data: T
 }
+
+type Created = { item: TodolistType };//Alt-Ctrl-V

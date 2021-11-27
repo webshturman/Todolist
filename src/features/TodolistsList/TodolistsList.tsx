@@ -21,6 +21,9 @@ export function TodoListContainer() {
     const isLoggedIn = useSelector<AppRootState, boolean>(state=> state.auth.isLoggedIn)
 
     useEffect(()=> {
+        if(!isLoggedIn){
+            return
+        }
         dispatch(getTodosTC())
     },[])
 

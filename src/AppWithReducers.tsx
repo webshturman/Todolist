@@ -38,12 +38,9 @@ export function AppWithReducers() {
                     <Typography variant="h6">
                         Todolists
                     </Typography>
-                    <Button
-                        variant={"outlined"}
-                        color="inherit"
-                    >
-                        {isLoggedIn ?   'UserName' : 'LogOut'}
-                    </Button>
+                    {isLoggedIn ?
+                    <Button variant={"outlined"} color="inherit">LogOut</Button>
+                        : <div></div>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>

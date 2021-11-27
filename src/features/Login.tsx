@@ -8,8 +8,9 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
+import {setLoginData} from "../state/auth-reducer";
 
 // const validate = (values:FormikErrorType) => {
 //     const errors: FormikErrorType = {};
@@ -26,14 +27,16 @@ import {AppRootState} from "../state/store";
 // }
 
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
 export const Login = () => {
 
+    const dispatch=useDispatch()
 
-    type FormikErrorType = {
-        email?: string
-        password?: string
-        rememberMe?: boolean
-    }
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -54,7 +57,8 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            // alert(JSON.stringify(values));
+            dispatch(setLoginData(values))
             formik.resetForm()
         },
 
@@ -77,18 +81,18 @@ export const Login = () => {
                     <FormGroup>
                         <TextField label="Email" margin="normal"
                                    {...formik.getFieldProps("email")}
+                                    error={!!formik.errors.email && formik.touched.email}
+                                   helperText={formik.touched.email ? formik.errors.email : ''}
                         />
-                        {formik.touched.email && formik.errors.email ?
-                            <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
                         <TextField type="password" label="Password" margin="normal"
                                    {...formik.getFieldProps("password")}
+                                   error={!!formik.errors.password && formik.touched.password}
+                                   helperText={formik.touched.password ? formik.errors.password : ''}
                                     // name={"password"}
                                     // onChange={formik.handleChange}
                                     // value={formik.values.password}
                                    // onBlur={formik.handleBlur}
                         />
-                        {formik.touched.password && formik.errors.password ?
-                            <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
                         <FormControlLabel label={'Remember me'} control={
                             <Checkbox checked={formik.values.rememberMe}
                                       {...formik.getFieldProps("rememberMe")}/>

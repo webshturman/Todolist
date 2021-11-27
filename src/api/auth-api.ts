@@ -5,7 +5,9 @@ export const authAPI = {
     me(){
         return instance.get<ResponseType<authDataType>>(`auth/me`)
     },
-
+    login(data:LoginDataType){
+        return instance.post<ResponseType<{userId:number}>>('auth/login',data)
+    }
 }
 
 export type authDataType = {
@@ -13,3 +15,11 @@ export type authDataType = {
     login: string
     email: string
 }
+export type LoginDataType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: boolean
+}
+
+
