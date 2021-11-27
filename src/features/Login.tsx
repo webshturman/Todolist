@@ -8,6 +8,8 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {useSelector} from "react-redux";
+import {AppRootState} from "../state/store";
 
 // const validate = (values:FormikErrorType) => {
 //     const errors: FormikErrorType = {};
@@ -25,6 +27,8 @@ import {useFormik} from "formik";
 
 
 export const Login = () => {
+
+
     type FormikErrorType = {
         email?: string
         password?: string
@@ -73,17 +77,15 @@ export const Login = () => {
                     <FormGroup>
                         <TextField label="Email" margin="normal"
                                    {...formik.getFieldProps("email")}
-                                    onBlur={formik.handleBlur}
                         />
                         {formik.touched.email && formik.errors.email ?
                             <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
-                        <TextField type="password" label="Password"
-                                   margin="normal"
-                            // name={"password"}
-                            // onChange={formik.handleChange}
-                            // value={formik.values.password}
+                        <TextField type="password" label="Password" margin="normal"
                                    {...formik.getFieldProps("password")}
-                                   onBlur={formik.handleBlur}
+                                    // name={"password"}
+                                    // onChange={formik.handleChange}
+                                    // value={formik.values.password}
+                                   // onBlur={formik.handleBlur}
                         />
                         {formik.touched.password && formik.errors.password ?
                             <div style={{color: 'red'}}>{formik.errors.password}</div> : null}

@@ -1,6 +1,7 @@
 
 import {AppThunk} from "./store";
-import {ACTIONS_TYPE, ActionAuthDataType} from "./actions";
+import {ACTIONS_TYPE, ActionAuthDataType, getAuthStatus} from "./actions";
+import {authAPI} from "../api/auth-api";
 
 const initialAuthState: initialAuthStateType = {
     isLoggedIn:false
@@ -16,10 +17,13 @@ export const authReducer = (state: initialAuthStateType = initialAuthState, acti
 }
 
 
-export const getTodosTC = (): AppThunk => async dispatch => {
+export const getAuthData = (): AppThunk => async dispatch => {
     // dispatch(ChangeLoadingStatusAC('loading'))
     try {
-        // const res = await TodoListAPI.getTodos()
+        const res = await authAPI.me()
+        if(res.data.resultCode === 0){
+            dispatch(getAuthStatus(true))
+        }
         // dispatch(getTodosAC(res.data))
         // dispatch(ChangeLoadingStatusAC('succeeded'))
     } catch (error:any) {

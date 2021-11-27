@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
@@ -9,19 +9,24 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import {Menu} from "@material-ui/icons";
 
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {ErrorSnackBar} from "./Components/ErrorSnackBar";
 import {RequestStatusType} from "./state/loader-reducer";
 import {TodoListContainer} from "./features/TodolistsList/TodolistsList";
 import {Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login";
+import {getAuthData} from "./state/auth-reducer";
 
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {
 
     const status = useSelector<AppRootState, RequestStatusType>((state) => state.loader.status)
-
+    const isLoggedIn = useSelector<AppRootState, boolean>(state=> state.auth.isLoggedIn)
+    const dispatch = useDispatch()
+    useEffect(()=> {
+        dispatch(getAuthData())
+    },[])
     return (
         <div className="App">
             <AppBar position="static">
@@ -37,7 +42,7 @@ export function AppWithReducers() {
                         variant={"outlined"}
                         color="inherit"
                     >
-                        Login
+                        {isLoggedIn ?   'UserName' : 'LogOut'}
                     </Button>
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}

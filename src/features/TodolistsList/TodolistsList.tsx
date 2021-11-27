@@ -17,6 +17,9 @@ import {changeTodolistFilterAC} from "../../state/actions";
 
 //-----------------------------------------------------------------------------------------
 export function TodoListContainer() {
+
+    const isLoggedIn = useSelector<AppRootState, boolean>(state=> state.auth.isLoggedIn)
+
     useEffect(()=> {
         dispatch(getTodosTC())
     },[])
@@ -36,6 +39,11 @@ export function TodoListContainer() {
     const addTodoList = useCallback((title: string) =>{
         dispatch(addTodosTC(title))
     },[dispatch])
+
+    // if(!isLoggedIn){
+    //     return <Redirect to={'/login'}/>
+    // }
+
     return (
         <>
                 <Grid container style={{padding:"15px 0", justifyContent: "center"}}>
