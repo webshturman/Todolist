@@ -45,6 +45,20 @@ export const setLoginData = (data:LoginDataType): AppThunk => async dispatch => 
     }
 
 }
+export const setLogOutData = (): AppThunk => async dispatch => {
+    dispatch(ChangeLoadingStatusAC('loading'))
+    try {
+        const res = await authAPI.logOut()
+        if(res.data.resultCode === 0){
+            dispatch(getAuthStatus(false))
+            dispatch(ChangeLoadingStatusAC('succeeded'))
+        }
+
+    } catch (error:any) {
+        // handleNetworkError(error,dispatch)
+    }
+
+}
 
 export type initialAuthStateType =  {
     isLoggedIn:boolean

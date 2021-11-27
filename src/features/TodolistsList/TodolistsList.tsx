@@ -18,30 +18,30 @@ import {changeTodolistFilterAC} from "../../state/actions";
 //-----------------------------------------------------------------------------------------
 export function TodoListContainer() {
 
-    const isLoggedIn = useSelector<AppRootState, boolean>(state=> state.auth.isLoggedIn)
+    const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn)
+    const todoLists = useSelector<AppRootState, Array<TodolistStateType>>((state) => state.todoLists)
+    const dispatch = useDispatch()
 
-    useEffect(()=> {
-        if(!isLoggedIn){
+    useEffect(() => {
+        if (!isLoggedIn) {
             return
         }
         dispatch(getTodosTC())
-    },[])
+    }, [])
 
-    const dispatch = useDispatch()
-    const todoLists = useSelector<AppRootState, Array<TodolistStateType>>((state)=>state.todoLists)
 
     const changeTodolist = useCallback((value: typeFilter, TodolistID: string) => {
         dispatch(changeTodolistFilterAC(value, TodolistID))
     }, [dispatch])
-    const changeTodolistTitle = useCallback((title:string, TodolistID: string) => {
+    const changeTodolistTitle = useCallback((title: string, TodolistID: string) => {
         dispatch(updateTodosTitleTC(title, TodolistID))
-    },[dispatch])
+    }, [dispatch])
     const removeTodolist = useCallback((TodolistID: string) => {
         dispatch(deleteTodosTC(TodolistID))
-    },[dispatch])
-    const addTodoList = useCallback((title: string) =>{
+    }, [dispatch])
+    const addTodoList = useCallback((title: string) => {
         dispatch(addTodosTC(title))
-    },[dispatch])
+    }, [dispatch])
 
     // if(!isLoggedIn){
     //     return <Redirect to={'/login'}/>
@@ -49,27 +49,27 @@ export function TodoListContainer() {
 
     return (
         <>
-                <Grid container style={{padding:"15px 0", justifyContent: "center"}}>
-                    <AddItemForm addItem={addTodoList}/>
-                </Grid>
-                <Grid container spacing={1}>
-                    {todoLists.map(todolist => {
-                        return <Grid item key={todolist.id}>
-                            <Paper elevation={10} style={{padding:"10px"}}>
-                                <Todolist
-                                    key={todolist.id}
-                                    TodolistID={todolist.id}
-                                    entityStatus={todolist.entityStatus}
-                                    title={todolist.title}
-                                    changeTodolist={changeTodolist}
-                                    filter={todolist.filter}
-                                    removeTodolist={removeTodolist}
-                                    changeTodolistTitle={changeTodolistTitle}
-                                />
-                            </Paper>
-                        </Grid>
-                    })}
-                </Grid>
+            <Grid container style={{padding: "15px 0", justifyContent: "center"}}>
+                <AddItemForm addItem={addTodoList}/>
+            </Grid>
+            <Grid container spacing={1}>
+                {todoLists.map(todolist => {
+                    return <Grid item key={todolist.id}>
+                        <Paper elevation={10} style={{padding: "10px"}}>
+                            <Todolist
+                                key={todolist.id}
+                                TodolistID={todolist.id}
+                                entityStatus={todolist.entityStatus}
+                                title={todolist.title}
+                                changeTodolist={changeTodolist}
+                                filter={todolist.filter}
+                                removeTodolist={removeTodolist}
+                                changeTodolistTitle={changeTodolistTitle}
+                            />
+                        </Paper>
+                    </Grid>
+                })}
+            </Grid>
         </>
     );
 }

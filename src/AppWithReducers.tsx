@@ -16,7 +16,7 @@ import {RequestStatusType} from "./state/loader-reducer";
 import {TodoListContainer} from "./features/TodolistsList/TodolistsList";
 import {Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login";
-import {getAuthData} from "./state/auth-reducer";
+import {getAuthData, setLogOutData} from "./state/auth-reducer";
 
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {
@@ -36,10 +36,10 @@ export function AppWithReducers() {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6">
-                        Todolists
+                        TodoLists
                     </Typography>
                     {isLoggedIn ?
-                    <Button variant={"outlined"} color="inherit">LogOut</Button>
+                    <Button variant={"outlined"} color="inherit" onClick={()=> dispatch(setLogOutData())}>LogOut</Button>
                         : <div></div>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
