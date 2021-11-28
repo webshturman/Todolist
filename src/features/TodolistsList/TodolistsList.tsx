@@ -13,6 +13,7 @@ import {AppRootState} from "../../state/store";
 import {Todolist} from "./Todolist";
 import {AddItemForm} from "../../Components/AddItemForm";
 import {changeTodolistFilterAC} from "../../state/actions";
+import {Navigate} from "react-router-dom";
 
 
 //-----------------------------------------------------------------------------------------
@@ -43,9 +44,9 @@ export function TodoListContainer() {
         dispatch(addTodosTC(title))
     }, [dispatch])
 
-    // if(!isLoggedIn){
-    //     return <Redirect to={'/login'}/>
-    // }
+    if(!isLoggedIn){
+        return <Navigate to={'/login'}/>
+    }
 
     return (
         <>

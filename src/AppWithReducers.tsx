@@ -12,21 +12,33 @@ import {Menu} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {ErrorSnackBar} from "./Components/ErrorSnackBar";
-import {RequestStatusType} from "./state/loader-reducer";
+import {getAuthData, RequestStatusType} from "./state/loader-reducer";
 import {TodoListContainer} from "./features/TodolistsList/TodolistsList";
 import {Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login";
-import {getAuthData, setLogOutData} from "./state/auth-reducer";
+import {setLogOutData} from "./state/auth-reducer";
+import {CircularProgress} from "@mui/material";
 
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {
 
     const status = useSelector<AppRootState, RequestStatusType>((state) => state.loader.status)
     const isLoggedIn = useSelector<AppRootState, boolean>(state=> state.auth.isLoggedIn)
+    const isInitialized = useSelector<AppRootState, boolean>(state=> state.loader.isInitialized)
+
     const dispatch = useDispatch()
+
     useEffect(()=> {
         dispatch(getAuthData())
     },[])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
+
     return (
         <div className="App">
             <AppBar position="static">

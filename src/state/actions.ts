@@ -19,6 +19,7 @@ export enum ACTIONS_TYPE {
     SET_ERROR_MESSAGE='AppWithReducers/SET_ERROR_MESSAGE',
     CHANGE_ENTITY_STATUS='Todolist/CHANGE_ENTITY_STATUS',
     GET_AUTH_STATUS='Auth/GET_AUTH_STATUS',
+    GET_INITIALIZED='loader/GET_INITIALIZED',
 }
 
 
@@ -86,6 +87,7 @@ export const updateTaskAC = (todolistID: string, taskID: string, model: UpdateDo
 
 //------------------------------LOADER-------------------------------------------------------------
 export type ActionLoaderType = ReturnType<typeof ChangeLoadingStatusAC> | ReturnType<typeof SetErrorMessageAC>
+| ReturnType<typeof getInitialized>
 
 export const ChangeLoadingStatusAC = (status:RequestStatusType) => {
     return {type: ACTIONS_TYPE.CHANGE_LOADER_STATUS, status} as const
@@ -93,7 +95,9 @@ export const ChangeLoadingStatusAC = (status:RequestStatusType) => {
 export const SetErrorMessageAC = (error:string | null) => {
     return {type: ACTIONS_TYPE.SET_ERROR_MESSAGE, error} as const
 }
-
+export const getInitialized = (initialized:boolean) => {
+    return {type: ACTIONS_TYPE.GET_INITIALIZED, initialized} as const
+}
 //------------------------------AUTH-------------------------------------------------------------
 export type ActionAuthDataType = ReturnType<typeof getAuthStatus>
 

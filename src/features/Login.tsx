@@ -11,6 +11,7 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
 import {setLoginData} from "../state/auth-reducer";
+import {Navigate} from "react-router-dom";
 
 // const validate = (values:FormikErrorType) => {
 //     const errors: FormikErrorType = {};
@@ -35,6 +36,7 @@ type FormikErrorType = {
 
 export const Login = () => {
 
+    const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn)
     const dispatch=useDispatch()
 
     const formik = useFormik({
@@ -57,12 +59,12 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            // alert(JSON.stringify(values));
             dispatch(setLoginData(values))
             formik.resetForm()
         },
 
     })
+    if(isLoggedIn) return <Navigate to={'/'}/>
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
