@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
 import {setLoginData} from "../state/auth-reducer";
 import {Navigate} from "react-router-dom";
+import {FormikErrorType} from "../api/auth-api";
 
 // const validate = (values:FormikErrorType) => {
 //     const errors: FormikErrorType = {};
@@ -28,11 +29,7 @@ import {Navigate} from "react-router-dom";
 // }
 
 
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-}
+
 
 export const Login = () => {
 

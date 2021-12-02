@@ -4,6 +4,10 @@ import {ACTIONS_TYPE, ActionAuthDataType, getAuthStatus, ChangeLoadingStatusAC} 
 import {authAPI, LoginDataType} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 
+export type initialAuthStateType =  {
+    isLoggedIn:boolean
+}
+
 const initialAuthState: initialAuthStateType = {
     isLoggedIn:false
 }
@@ -54,6 +58,3 @@ export const setLogOutData = (): AppThunk => async dispatch => {
 
 }
 
-export type initialAuthStateType =  {
-    isLoggedIn:boolean
-}
