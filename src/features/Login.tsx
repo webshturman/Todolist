@@ -37,7 +37,7 @@ type FormikErrorType = {
 export const Login = () => {
 
     const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn)
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -46,7 +46,7 @@ export const Login = () => {
             rememberMe: false
         },
         validate: (values) => {
-            const errors: FormikErrorType = {};
+            const errors: Partial<FormikErrorType> = {};
             if (!values.email) {
                 errors.email = 'Email Required';
             }
@@ -64,7 +64,7 @@ export const Login = () => {
         },
 
     })
-    if(isLoggedIn) return <Navigate to={'/'}/>
+    if (isLoggedIn) return <Navigate to={'/'}/>
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
@@ -81,19 +81,19 @@ export const Login = () => {
                         <p>Password: free</p>
                     </FormLabel>
                     <FormGroup>
-                        <TextField label="Email" margin="normal"
+                        <TextField label='Email' margin="normal"
                                    {...formik.getFieldProps("email")}
-                                    error={!!formik.errors.email && formik.touched.email}
+                                   error={!!formik.errors.email && formik.touched.email}
                                    helperText={formik.touched.email ? formik.errors.email : ''}
                         />
-                        <TextField type="password" label="Password" margin="normal"
+                        <TextField type="password" label='Password' margin="normal"
                                    {...formik.getFieldProps("password")}
                                    error={!!formik.errors.password && formik.touched.password}
                                    helperText={formik.touched.password ? formik.errors.password : ''}
-                                    // name={"password"}
-                                    // onChange={formik.handleChange}
-                                    // value={formik.values.password}
-                                   // onBlur={formik.handleBlur}
+                            // name={"password"}
+                            // onChange={formik.handleChange}
+                            // value={formik.values.password}
+                            // onBlur={formik.handleBlur}
                         />
                         <FormControlLabel label={'Remember me'} control={
                             <Checkbox checked={formik.values.rememberMe}

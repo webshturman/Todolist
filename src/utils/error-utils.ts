@@ -11,7 +11,7 @@ export const handleServerError = <T>(data:ResponseType<T>,dispatch: Dispatch<Act
     dispatch(ChangeLoadingStatusAC('failed'))
 }
 
-export const handleNetworkError = (error:{message:string},dispatch: Dispatch<ActionLoaderType>)=> {
+export const handleNetworkError = (error:{message:string | null},dispatch: Dispatch<ActionLoaderType>)=> {
     dispatch(SetErrorMessageAC(error.message ? error.message : 'Network connection error'))
     dispatch(ChangeLoadingStatusAC('failed'))
 }
