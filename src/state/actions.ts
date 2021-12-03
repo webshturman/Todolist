@@ -11,8 +11,8 @@ export enum ACTIONS_TYPE {
     CHANGE_TODOLIST_FILTER_TYPE = 'AppWithReducers/CHANGE_TODOLIST_TYPE',
     CHANGE_TODOLIST_TITLE_TYPE = 'AppWithReducers/CHANGE_TODOLIST_TITLE_TYPE',
     GET_TODOLIST_TYPE = 'AppWithReducers/GET_TODOLIST_TYPE',
-    ADD_TASKS_TYPE = 'Todolist/ADD_TASKS_TYPE',
-    GET_TASKS_TYPE = 'Todolist/GET_TASKS_TYPE',
+    ADD_TASKS_TYPE = 'todolist/ADD_TASKS_TYPE',
+    GET_TASKS_TYPE = 'todolist/GET_TASKS_TYPE',
     DELETE_TASKS_TYPE = 'Task/DELETE_TASKS_TYPE',
     UPDATE_TASKS_TYPE = 'Task/UPDATE_TASKS_TYPE',
     CHANGE_LOADER_STATUS='AppWithReducers/CHANGE_LOADER_STATUS',
@@ -20,6 +20,7 @@ export enum ACTIONS_TYPE {
     CHANGE_ENTITY_STATUS='Todolist/CHANGE_ENTITY_STATUS',
     GET_AUTH_STATUS='Auth/GET_AUTH_STATUS',
     GET_INITIALIZED='loader/GET_INITIALIZED',
+    CLEAR_TODOS_DATA='todolist/CLEAR_TODOS_DATA',
 }
 
 
@@ -29,11 +30,12 @@ export type ActionRemoveTodolistType = ReturnType<typeof removeTodolistAC>;
 export type ActionChangeTodolistTitleType = ReturnType<typeof changeTodolistTitleAC>;
 export type ActionChangeTodolistType = ReturnType<typeof changeTodolistFilterAC>;
 export type ActionGetTodolistType = ReturnType<typeof getTodosAC>;
-export type ActionChangeEntityStatusType = ReturnType<typeof ChangeEntityStatusAC>;
+export type ActionChangeEntityStatusType = ReturnType<typeof changeEntityStatusAC>;
+export type ActionClearTodosDataType = ReturnType<typeof clearTodosDataAC>;
 
 export type ActionTodolistType = ActionAddTodolistType | ActionRemoveTodolistType
     | ActionChangeTodolistTitleType | ActionChangeTodolistType
-    | ActionGetTodolistType | ActionChangeEntityStatusType
+    | ActionGetTodolistType | ActionChangeEntityStatusType | ActionClearTodosDataType
 //----------------------------------------------------------------------------
 
 export const addTodolistAC = (todo: TodolistType) => {
@@ -52,17 +54,19 @@ export const changeTodolistFilterAC = (newTodolistFilter: typeFilter, todolistId
 export const getTodosAC = (todolist: Array<TodolistType>) => {
     return {type: ACTIONS_TYPE.GET_TODOLIST_TYPE, todolist} as const
 }
-export const ChangeEntityStatusAC = (status:RequestStatusType, todolistId: string) => {
+export const changeEntityStatusAC = (status:RequestStatusType, todolistId: string) => {
     return {type: ACTIONS_TYPE.CHANGE_ENTITY_STATUS, status, todolistId} as const
 }
-
+export const clearTodosDataAC = () => {
+    return {type: ACTIONS_TYPE.CLEAR_TODOS_DATA} as const
+}
 //--------------------------------------TASKS--------------------------------
 export type AddTaskActionType = ReturnType<typeof addTaskAC>;
 export type DeleteTaskActionType = ReturnType<typeof deleteTaskAC>;
 export type UpdateTaskActionType = ReturnType<typeof updateTaskAC>;
 export type GetTasksActionType = ReturnType<typeof getTaskAC>;
 
-export type ActionTaskType = AddTaskActionType | DeleteTaskActionType | UpdateTaskActionType
+export type ActionTaskType = AddTaskActionType | DeleteTaskActionType | UpdateTaskActionType | ActionClearTodosDataType
     | ActionAddTodolistType | ActionRemoveTodolistType | ActionGetTodolistType | GetTasksActionType
 
 //--------------------------------------------------------------------------------------

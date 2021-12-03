@@ -52,20 +52,15 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
                     ...action.model
                 } : task)
             }
-        // case 'UPDATE-TASK':
-        //     return {
-        //         ...state,
-        //         [action.task.todoListId]: state[action.task.todoListId].map(ts => ts.id === action.task.id ? {
-        //             ...ts,
-        //             ...action.task
-        //         } : ts)
-        //     }
+
         case ACTIONS_TYPE.ADD_TODOLIST_TYPE:
             return {...state, [action.todo.id]: []}
         case ACTIONS_TYPE.REMOVE_TODOLIST_TYPE:
             const newTasks = {...state}
             delete newTasks[action.todolistId]
             return newTasks
+        case ACTIONS_TYPE.CLEAR_TODOS_DATA:
+            return {}
         default:
             return state;
     }

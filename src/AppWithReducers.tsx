@@ -13,11 +13,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {ErrorSnackBar} from "./Components/ErrorSnackBar";
 import {getAuthData, RequestStatusType} from "./state/loader-reducer";
-import {TodoListContainer} from "./features/TodolistsList/TodolistsList";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login";
 import {setLogOutData} from "./state/auth-reducer";
 import {CircularProgress} from "@mui/material";
+import {TodoListContainer} from "./features/TodolistsList/TodoListContainer";
 
 //-----------------------------------------------------------------------------------------
 export function AppWithReducers() {

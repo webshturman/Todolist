@@ -31,9 +31,9 @@ export const Todolist: FC<PropsType> = React.memo(({title, changeTodolist, remov
     const tasks = useSelector<AppRootState, Array<TaskObjectType>>((state)=> state.tasks[TodolistID])
     //берем таски для конкретного тудулиста
 
-    useEffect(()=>{
-        dispatch(getTaskTC(TodolistID))
-    },[])
+    // useEffect(()=>{
+    //     dispatch(getTaskTC(TodolistID))
+    // },[])
 
 //-----------------------------------------------------------------------------------------------------------------------
     const todolistRemover = useCallback(()=> removeTodolist(TodolistID),[removeTodolist, TodolistID])

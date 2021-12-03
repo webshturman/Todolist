@@ -4,13 +4,14 @@ import {TodoListAPI, TodolistType} from "../api/todolist-api";
 import {
     ACTIONS_TYPE,
     ActionTodolistType,
-    addTodolistAC, ChangeEntityStatusAC, ChangeLoadingStatusAC,
+    addTodolistAC, changeEntityStatusAC, ChangeLoadingStatusAC,
     changeTodolistTitleAC,
     getTodosAC,
     removeTodolistAC,
 } from "./actions";
 import {RequestStatusType} from "./loader-reducer";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
+import {getTaskTC} from "./tasks-reducer";
 
 //----------------------------------------------------------------------------
 export type typeFilter = 'All' | 'Active' | 'Completed'
@@ -38,6 +39,8 @@ export const todolistReducer = (state: Array<TodolistStateType> = initialState, 
             return state.map(td => td.id === action.todolistId ? {...td, filter: action.filter} : td)
         case ACTIONS_TYPE.CHANGE_ENTITY_STATUS:
             return state.map(todolist => todolist.id === action.todolistId ? {...todolist, entityStatus: action.status} : todolist)
+        case ACTIONS_TYPE.CLEAR_TODOS_DATA:
+            return []
         default:
             return state;
     }
@@ -55,10 +58,16 @@ export const getTodosTC = (): AppThunk => async dispatch => {
         dispatch(ChangeLoadingStatusAC('loading'))
     try {
         const res = await TodoListAPI.getTodos()
-        dispatch(getTodosAC(res.data))
-        dispatch(ChangeLoadingStatusAC('succeeded'))
+        const todoLists = res.data
+        dispatch(getTodosAC(todoLists))  //запрашиваем тудулисты
+        todoLists.forEach(todoList =>{
+            dispatch(getTaskTC(todoList.id))  //и после запрашиваем таски для каждого тудулиста
+        })
+
     } catch (error:any) {
         handleNetworkError(error,dispatch)
+    } finally{
+        dispatch(ChangeLoadingStatusAC('succeeded'))
     }
 
 }
@@ -78,7 +87,7 @@ export const addTodosTC = (title: string): AppThunk => async dispatch => {
 }
 export const deleteTodosTC = (todolistId: string): AppThunk => async dispatch => {
     dispatch(ChangeLoadingStatusAC('loading'))
-    dispatch(ChangeEntityStatusAC('loading',todolistId))
+    dispatch(changeEntityStatusAC('loading',todolistId))
     try {
         const res = await TodoListAPI.deleteTodos(todolistId)
         if(res.data.resultCode === 0){

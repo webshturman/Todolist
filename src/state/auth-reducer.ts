@@ -1,6 +1,6 @@
 
 import {AppThunk} from "./store";
-import {ACTIONS_TYPE, ActionAuthDataType, getAuthStatus, ChangeLoadingStatusAC} from "./actions";
+import {ACTIONS_TYPE, ActionAuthDataType, getAuthStatus, ChangeLoadingStatusAC, clearTodosDataAC} from "./actions";
 import {authAPI, LoginDataType} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 
@@ -45,7 +45,7 @@ export const setLogOutData = (): AppThunk => async dispatch => {
         const res = await authAPI.logOut()
         if(res.data.resultCode === 0){
             dispatch(getAuthStatus(false))
-            dispatch(ChangeLoadingStatusAC('succeeded'))
+            dispatch(clearTodosDataAC())
         } else{
             handleServerError(res.data,dispatch)
         }
