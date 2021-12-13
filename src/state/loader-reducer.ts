@@ -1,7 +1,4 @@
-import {ActionLoaderType, ACTIONS_TYPE, getAuthStatus, getInitialized} from "./actions";
-import {AppThunk} from "./store";
-import {authAPI} from "../api/auth-api";
-import {handleNetworkError} from "../utils/error-utils";
+import {ActionLoaderType, ACTIONS_TYPE} from "./actions";
 
 
 export const InitialLoaderState:InitialLoaderStateType ={
@@ -25,21 +22,7 @@ export const loaderReducer = (state: InitialLoaderStateType  = InitialLoaderStat
 }
 
 //-------------------------------------------------------------------------------------
-export const getAuthData = (): AppThunk => async dispatch => {
-    // dispatch(ChangeLoadingStatusAC('loading'))
-    try {
-        const res = await authAPI.me()
-        if(res.data.resultCode === 0){
-            dispatch(getAuthStatus(true))
-        }else{
 
-        }
-        dispatch(getInitialized(true))
-    } catch (error:any) {
-        handleNetworkError(error,dispatch)
-    }
-
-}
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type InitialLoaderStateType={
     status: RequestStatusType

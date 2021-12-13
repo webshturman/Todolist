@@ -4,24 +4,7 @@ import {typeFilter} from "./todolists-reducer";
 import {TaskObjectType} from "../api/task-api";
 import {UpdateDomainTasksModelType} from "./tasks-reducer";
 import {RequestStatusType} from "./loader-reducer";
-//------------------------------------------------------------------
-export enum ACTIONS_TYPE {
-    ADD_TODOLIST_TYPE = 'AppWithReducers/ADD_TODOLIST_TYPE',
-    REMOVE_TODOLIST_TYPE = 'AppWithReducers/REMOVE_TODOLIST_TYPE',
-    CHANGE_TODOLIST_FILTER_TYPE = 'AppWithReducers/CHANGE_TODOLIST_TYPE',
-    CHANGE_TODOLIST_TITLE_TYPE = 'AppWithReducers/CHANGE_TODOLIST_TITLE_TYPE',
-    GET_TODOLIST_TYPE = 'AppWithReducers/GET_TODOLIST_TYPE',
-    ADD_TASKS_TYPE = 'todolist/ADD_TASKS_TYPE',
-    GET_TASKS_TYPE = 'todolist/GET_TASKS_TYPE',
-    DELETE_TASKS_TYPE = 'Task/DELETE_TASKS_TYPE',
-    UPDATE_TASKS_TYPE = 'Task/UPDATE_TASKS_TYPE',
-    CHANGE_LOADER_STATUS='AppWithReducers/CHANGE_LOADER_STATUS',
-    SET_ERROR_MESSAGE='AppWithReducers/SET_ERROR_MESSAGE',
-    CHANGE_ENTITY_STATUS='Todolist/CHANGE_ENTITY_STATUS',
-    GET_AUTH_STATUS='Auth/GET_AUTH_STATUS',
-    GET_INITIALIZED='loader/GET_INITIALIZED',
-    CLEAR_TODOS_DATA='todolist/CLEAR_TODOS_DATA',
-}
+import {ACTIONS_TYPE} from "../enums/actionsConstants";
 
 
 //---------------------------TodoLISTS------------------

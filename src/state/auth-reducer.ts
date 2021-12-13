@@ -1,6 +1,13 @@
 
 import {AppThunk} from "./store";
-import {ACTIONS_TYPE, ActionAuthDataType, getAuthStatus, ChangeLoadingStatusAC, clearTodosDataAC} from "./actions";
+import {
+    ACTIONS_TYPE,
+    ActionAuthDataType,
+    getAuthStatus,
+    ChangeLoadingStatusAC,
+    clearTodosDataAC,
+    getInitialized
+} from "./actions";
 import {authAPI, LoginDataType} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 
@@ -21,7 +28,20 @@ export const authReducer = (state: initialAuthStateType = initialAuthState, acti
     }
 }
 
+export const getAuthData = (): AppThunk => async dispatch => {
+    try {
+        const res = await authAPI.me()
+        if(res.data.resultCode === 0){
+            dispatch(getAuthStatus(true))
+        }else{
 
+        }
+        dispatch(getInitialized(true))
+    } catch (error:any) {
+        handleNetworkError(error,dispatch)
+    }
+
+}
 export const setLoginData = (data:LoginDataType): AppThunk => async dispatch => {
     dispatch(ChangeLoadingStatusAC('loading'))
     try {

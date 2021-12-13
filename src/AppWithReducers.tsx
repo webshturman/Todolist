@@ -12,10 +12,10 @@ import {Menu} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {ErrorSnackBar} from "./Components/ErrorSnackBar";
-import {getAuthData, RequestStatusType} from "./state/loader-reducer";
+import {RequestStatusType} from "./state/loader-reducer";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login";
-import {setLogOutData} from "./state/auth-reducer";
+import {getAuthData, setLogOutData} from "./state/auth-reducer";
 import {CircularProgress} from "@mui/material";
 import {TodoListContainer} from "./features/TodolistsList/TodoListContainer";
 
