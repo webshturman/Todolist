@@ -1,7 +1,6 @@
 
 import {AppThunk} from "./store";
 import {
-    ACTIONS_TYPE,
     ActionAuthDataType,
     getAuthStatus,
     ChangeLoadingStatusAC,
@@ -10,6 +9,7 @@ import {
 } from "./actions";
 import {authAPI, LoginDataType} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
+import {ACTIONS_TYPE} from "../enums/actionsConstants";
 
 export type initialAuthStateType =  {
     isLoggedIn:boolean

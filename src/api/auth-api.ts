@@ -1,4 +1,5 @@
-import {instance, ResponseType} from "../api/todolist-api";
+import {ResponseType} from "../api/todolist-api";
+import { instance } from "./instance";
 
 
 export const authAPI = {

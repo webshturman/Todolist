@@ -13,7 +13,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export const ErrorSnackBar = () => {
-    // const [open, setOpen] = React.useState(false);
     const error = useSelector<AppRootState, string | null>(state => state.loader.error)
     const dispatch = useDispatch()
 
@@ -22,7 +21,6 @@ export const ErrorSnackBar = () => {
             return;
         }
         dispatch(SetErrorMessageAC(null))
-        // setOpen(false);
     };
     const isOpen = error != null
 
