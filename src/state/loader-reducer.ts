@@ -1,4 +1,5 @@
-import {ActionLoaderType, ACTIONS_TYPE} from "./actions";
+import {ActionLoaderType} from "./actions";
+import {ACTIONS_TYPE} from "../enums/actionsConstants";
 
 
 export const InitialLoaderState:InitialLoaderStateType ={

@@ -2,7 +2,6 @@
 import {AppThunk} from "./store";
 import {TodoListAPI, TodolistType} from "../api/todolist-api";
 import {
-    ACTIONS_TYPE,
     ActionTodolistType,
     addTodolistAC, changeEntityStatusAC, ChangeLoadingStatusAC,
     changeTodolistTitleAC,
@@ -12,6 +11,7 @@ import {
 import {RequestStatusType} from "./loader-reducer";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {getTaskTC} from "./tasks-reducer";
+import { ACTIONS_TYPE } from "../enums/actionsConstants";
 
 //----------------------------------------------------------------------------
 export type typeFilter = 'All' | 'Active' | 'Completed'
@@ -29,7 +29,6 @@ export const todolistReducer = (state: Array<TodolistStateType> = initialState, 
         case ACTIONS_TYPE.GET_TODOLIST_TYPE:
             return action.todolist.map((tl) => ({...tl, filter: 'All', entityStatus:'idle'}))
         case ACTIONS_TYPE.ADD_TODOLIST_TYPE:
-            // return [{...action.todolist, filter:'All'}, ...state]
             return [{...action.todo, filter: 'All',entityStatus:'idle'}, ...state]
         case ACTIONS_TYPE.REMOVE_TODOLIST_TYPE:
             return state.filter(tl => tl.id !== action.todolistId)

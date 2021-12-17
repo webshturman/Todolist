@@ -1,5 +1,6 @@
 import {ResponseType} from "../api/todolist-api";
 import { instance } from "./instance";
+import {authDataType, LoginDataType} from "./types/authApiTypes";
 
 
 export const authAPI = {
@@ -14,17 +15,17 @@ export const authAPI = {
     }
 }
 
-export type authDataType = {
-    id: string
-    login: string
-    email: string
-}
-export type LoginDataType = FormikErrorType & {
-    captcha?: boolean
-}
-
-export type FormikErrorType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
+// export type authDataType = {
+//     id: string
+//     login: string
+//     email: string
+// }
+// export type LoginDataType = FormikErrorType & {
+//     captcha?: boolean
+// }
+//
+// export type FormikErrorType = {
+//     email: string
+//     password: string
+//     rememberMe: boolean
+// }
