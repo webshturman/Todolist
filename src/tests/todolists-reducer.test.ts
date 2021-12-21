@@ -1,13 +1,13 @@
 import {v1} from "uuid";
-import {todolistReducer, TodolistStateType, typeFilter} from "./todolists-reducer";
+import {todolistReducer, TodolistStateType, typeFilter} from "../state/todolists-reducer";
 import {
     addTodolistAC,
-    ChangeEntityStatusAC,
+    changeEntityStatusAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     getTodosAC,
     removeTodolistAC
-} from "./actions";
+} from "../state/actions";
 
 let startTodoLists: Array<TodolistStateType>=[]
 let TodolistID1 = v1()
@@ -67,7 +67,7 @@ test('get todoLists from api', ()=> {
 
 test('entityStatus status should be changed correct ', ()=> {
 
-    const action = ChangeEntityStatusAC("loading",TodolistID1)
+    const action = changeEntityStatusAC("loading",TodolistID1)
     const endState = todolistReducer(startTodoLists,action)
 
     expect(endState[0].entityStatus).toBe("loading")

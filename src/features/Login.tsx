@@ -12,7 +12,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/store";
 import {setLoginData} from "../state/auth-reducer";
 import {Navigate} from "react-router-dom";
-import {FormikErrorType} from "../api/auth-api";
+import {FormikErrorType} from "../api/types/authApiTypes";
+
 
 // const validate = (values:FormikErrorType) => {
 //     const errors: FormikErrorType = {};

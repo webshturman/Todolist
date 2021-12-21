@@ -7,9 +7,10 @@ import {
     clearTodosDataAC,
     getInitialized
 } from "./actions";
-import {authAPI, LoginDataType} from "../api/auth-api";
+import {authAPI} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {ACTIONS_TYPE} from "../enums/actionsConstants";
+import {LoginDataType} from "../api/types/authApiTypes";
 
 export type initialAuthStateType =  {
     isLoggedIn:boolean

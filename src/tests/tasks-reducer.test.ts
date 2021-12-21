@@ -1,9 +1,10 @@
 
-import {TaskStateType} from "../AppWithReducers";
-import {tasksReducer} from "./tasks-reducer";
-import {addTaskAC, addTodolistAC, deleteTaskAC, getTodosAC, removeTodolistAC, updateTaskAC} from "./actions";
-import {TaskPriorities, TaskStatuses} from "../api/task-api";
-import {TodolistStateType} from "./todolists-reducer";
+
+import {tasksReducer} from "../state/tasks-reducer";
+import {addTaskAC, addTodolistAC, deleteTaskAC, getTodosAC, removeTodolistAC, updateTaskAC} from "../state/actions";
+import {TaskPriorities, TaskStateType, TaskStatuses} from "../api/task-api";
+import {TodolistStateType} from "../state/todolists-reducer";
+
 
 let startState:TaskStateType ={};
 beforeEach(()=> {
@@ -96,8 +97,8 @@ test('delete task array, when todolist removed', ()=> {
 test('add new tasks, when get todoLists from server', ()=> {
 
     const startTodoLists: Array<TodolistStateType> = [
-        {id: '20', title: 'What to learn', filter: 'All'},
-        {id: '11', title: 'What to learn Extra', filter: 'All'}
+        {id: '20', title: 'What to learn', filter: 'All',entityStatus: 'idle'},
+        {id: '11', title: 'What to learn Extra', filter: 'All',entityStatus: 'idle'}
     ];
     const action = getTodosAC(startTodoLists);
     const endState = tasksReducer({},action);

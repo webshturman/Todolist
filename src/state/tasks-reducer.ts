@@ -3,10 +3,11 @@
 import {TaskAPI, TaskPriorities, TaskStateType, TaskStatuses, UpdateTasksModelType} from "../api/task-api";
 import { AppRootState, AppThunk} from "./store";
 import {
-    ACTIONS_TYPE, ActionTaskType, addTaskAC, ChangeLoadingStatusAC, deleteTaskAC,
+     ActionTaskType, addTaskAC, ChangeLoadingStatusAC, deleteTaskAC,
     getTaskAC, updateTaskAC
 } from "./actions";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
+import {ACTIONS_TYPE} from "../enums/actionsConstants";
 
 //----------------------------------------------------------------------------------
 

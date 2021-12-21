@@ -9,7 +9,8 @@ export const InitialLoaderState:InitialLoaderStateType ={
 }
 // export type InitialLoaderStateType = typeof InitialLoaderState
 
-export const loaderReducer = (state: InitialLoaderStateType  = InitialLoaderState, action: ActionLoaderType):InitialLoaderStateType=> {
+export const loaderReducer =
+    (state: InitialLoaderStateType = InitialLoaderState, action: ActionLoaderType):InitialLoaderStateType=> {
     switch (action.type) {
         case ACTIONS_TYPE.CHANGE_LOADER_STATUS:
             return {...state, status:action.status}
