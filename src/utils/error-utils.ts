@@ -1,6 +1,7 @@
-import {ActionLoaderType, ChangeLoadingStatusAC, SetErrorMessageAC} from "../state/actions";
+
 import {ResponseType} from "../api/todolist-api";
 import {Dispatch} from "redux";
+import { ActionLoaderType, ChangeLoadingStatusAC, SetErrorMessageAC } from "../state/actions/loader-actions";
 
 export const handleServerError = <T>(data:ResponseType<T>,dispatch: Dispatch<ActionLoaderType>)=> {
     if(data.messages.length){

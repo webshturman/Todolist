@@ -1,16 +1,13 @@
 
 import {AppThunk} from "./store";
-import {
-    ActionAuthDataType,
-    getAuthStatus,
-    ChangeLoadingStatusAC,
-    clearTodosDataAC,
-    getInitialized
-} from "./actions";
+
 import {authAPI} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {ACTIONS_TYPE} from "../enums/actionsConstants";
 import {LoginDataType} from "../api/types/authApiTypes";
+import { ActionAuthDataType, getAuthStatus } from "./actions/auth-actions";
+import {ChangeLoadingStatusAC, getInitialized } from "./actions/loader-actions";
+import { clearTodosDataAC } from "./actions/todolists-actions";
 
 export type initialAuthStateType =  {
     isLoggedIn:boolean

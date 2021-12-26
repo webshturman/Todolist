@@ -12,8 +12,8 @@ import {
 import {AppRootState} from "../../state/store";
 import {Todolist} from "./Todolist";
 import {AddItemForm} from "../../Components/AddItemForm";
-import {changeTodolistFilterAC} from "../../state/actions";
 import {Navigate} from "react-router-dom";
+import { changeTodolistFilterAC } from '../../state/actions/todolists-actions';
 
 
 //-----------------------------------------------------------------------------------------

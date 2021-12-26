@@ -1,17 +1,13 @@
 
 import {AppThunk} from "./store";
 import {TodoListAPI, TodolistType} from "../api/todolist-api";
-import {
-    ActionTodolistType,
-    addTodolistAC, changeEntityStatusAC, ChangeLoadingStatusAC,
-    changeTodolistTitleAC,
-    getTodosAC,
-    removeTodolistAC,
-} from "./actions";
+
 import {RequestStatusType} from "./loader-reducer";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {getTaskTC} from "./tasks-reducer";
 import { ACTIONS_TYPE } from "../enums/actionsConstants";
+import { ActionTodolistType, addTodolistAC, changeEntityStatusAC, changeTodolistTitleAC, getTodosAC, removeTodolistAC } from "./actions/todolists-actions";
+import { ChangeLoadingStatusAC } from "./actions/loader-actions";
 
 //----------------------------------------------------------------------------
 export type typeFilter = 'All' | 'Active' | 'Completed'

@@ -1,13 +1,11 @@
 
-
 import {TaskAPI, TaskPriorities, TaskStateType, TaskStatuses, UpdateTasksModelType} from "../api/task-api";
 import { AppRootState, AppThunk} from "./store";
-import {
-     ActionTaskType, addTaskAC, ChangeLoadingStatusAC, deleteTaskAC,
-    getTaskAC, updateTaskAC
-} from "./actions";
+
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {ACTIONS_TYPE} from "../enums/actionsConstants";
+import { ActionTaskType, addTaskAC, deleteTaskAC, getTaskAC, updateTaskAC } from "./actions/tasks-actions";
+import { ChangeLoadingStatusAC } from "./actions/loader-actions";
 
 //----------------------------------------------------------------------------------
 
@@ -31,9 +29,8 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
             return {...state, [action.TodolistID]: action.tasks}
 
         case ACTIONS_TYPE.GET_TODOLIST_TYPE:
-            // debugger
             let copyTasks = {...state};
-            action.todolist.forEach((tl) => {
+            action.todolist.forEach((tl:any) => {
                 copyTasks[tl.id] = []
             });
             return copyTasks;
@@ -80,7 +77,7 @@ export const getTaskTC = (todolistID: string): AppThunk => async dispatch => {
 export const deleteTaskTC = (taskID: string, todolistID: string): AppThunk => async dispatch => {
     dispatch(ChangeLoadingStatusAC('loading'))
     try {
-        const res = await TaskAPI.deleteTsk(taskID, todolistID)
+        await TaskAPI.deleteTsk(taskID, todolistID)
         dispatch(deleteTaskAC(taskID, todolistID))
         dispatch(ChangeLoadingStatusAC('succeeded'))
     } catch (e) {
