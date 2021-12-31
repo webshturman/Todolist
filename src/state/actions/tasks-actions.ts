@@ -1,4 +1,4 @@
-import {TaskObjectType} from "../../api/task-api";
+
 import {ACTIONS_TYPE} from "../../enums/actionsConstants";
 import {UpdateDomainTasksModelType} from "../tasks-reducer";
 import {
@@ -7,6 +7,7 @@ import {
     ActionGetTodolistType,
     ActionRemoveTodolistType
 } from "./todolists-actions";
+import {TaskObjectType} from "../../api/types/taskApiType";
 
 export type AddTaskActionType = ReturnType<typeof addTaskAC>;
 export type DeleteTaskActionType = ReturnType<typeof deleteTaskAC>;

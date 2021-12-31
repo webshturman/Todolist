@@ -4,9 +4,10 @@ import {Delete} from "@material-ui/icons";
 import s from '../../App.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../state/store";
-import {TaskObjectType, TaskStatuses} from "../../api/task-api";
+
 import {deleteTaskTC, updateTaskTC} from "../../state/tasks-reducer";
 import {EditableSpan} from "../../Components/EditableSpan";
+import {TaskObjectType, TaskStatuses} from "../../api/types/taskApiType";
 
 
 export type SingleTaskType ={
@@ -17,7 +18,7 @@ export type SingleTaskType ={
 export const Task: React.FC<SingleTaskType> = React.memo(({TaskID, TodolistID}) => {
     const dispatch = useDispatch()
     const task = useSelector<AppRootState, TaskObjectType>(state => {
-       return  state.tasks[TodolistID].filter(ts => ts.id === TaskID)[0]
+       return  state.tasks[TodolistID].filter((ts:TaskObjectType) => ts.id === TaskID)[0]
     })
     const taskRemover = useCallback(()=> dispatch(deleteTaskTC(TaskID,TodolistID)), [])
     const checkHandler = (e:ChangeEvent<HTMLInputElement>) => {
