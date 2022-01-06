@@ -1,5 +1,6 @@
 import {InitialLoaderStateType, loaderReducer} from "../state/loader-reducer";
-import {ChangeLoadingStatusAC, getInitialized, SetErrorMessageAC} from "../state/actions";
+import {ChangeLoadingStatusAC, getInitialized, SetErrorMessageAC} from "../state/actions/loader-actions";
+
 
 
 let startState: InitialLoaderStateType;
@@ -25,7 +26,7 @@ test('error message should be set correct ', () => {
 
     expect(endState.error).toBe("error")
 })
-test('Initiolized status should change', () => {
+test('Initialized status should change', () => {
 
     const action = getInitialized(true)
     const endState = loaderReducer(startState, action)

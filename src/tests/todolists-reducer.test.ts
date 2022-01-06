@@ -1,13 +1,12 @@
 import {v1} from "uuid";
 import {todolistReducer, TodolistStateType, typeFilter} from "../state/todolists-reducer";
 import {
-    addTodolistAC,
-    changeEntityStatusAC,
+    addTodolistAC, changeEntityStatusAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    getTodosAC,
+    changeTodolistTitleAC, getTodosAC,
     removeTodolistAC
-} from "../state/actions";
+} from "../state/actions/todolists-actions";
+
 
 let startTodoLists: Array<TodolistStateType>=[]
 let TodolistID1 = v1()
