@@ -1,18 +1,17 @@
-
 import {ResponseType} from "../api/todolist-api";
 import {Dispatch} from "redux";
-import { ActionLoaderType, ChangeLoadingStatusAC, SetErrorMessageAC } from "../state/actions/loader-actions";
+import {ChangeLoadingStatusAC, SetErrorMessageAC} from "../state/loader-reducer";
 
-export const handleServerError = <T>(data:ResponseType<T>,dispatch: Dispatch<ActionLoaderType>)=> {
+export const handleServerError = <T>(data:ResponseType<T>,dispatch: Dispatch)=> {
     if(data.messages.length){
-        dispatch(SetErrorMessageAC(data.messages[0]))
+        dispatch(SetErrorMessageAC({error: data.messages[0]}))
     } else{
-        dispatch(SetErrorMessageAC("some error"))
+        dispatch(SetErrorMessageAC({error: "some error"}))
     }
-    dispatch(ChangeLoadingStatusAC('failed'))
+    dispatch(ChangeLoadingStatusAC({value:'failed'}))
 }
 
-export const handleNetworkError = (error:{message:string | null},dispatch: Dispatch<ActionLoaderType>)=> {
-    dispatch(SetErrorMessageAC(error.message ? error.message : 'Network connection error'))
-    dispatch(ChangeLoadingStatusAC('failed'))
+export const handleNetworkError = (error:{message:string | null},dispatch: Dispatch)=> {
+    dispatch(SetErrorMessageAC({error: error.message ? error.message : 'Network connection error'}))
+    dispatch(ChangeLoadingStatusAC({value:'failed'}))
 }

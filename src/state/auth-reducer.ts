@@ -2,11 +2,10 @@
 import {authAPI} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {LoginDataType} from "../api/types/authApiTypes";
-import {getInitialized} from "./actions/loader-actions";
 import {clearTodosDataAC} from "./actions/todolists-actions";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Dispatch} from "redux";
-import { ChangeLoadingStatusAC } from "./loader-reducer";
+import { ChangeLoadingStatusAC, getInitialized } from "./loader-reducer";
 
 
 const initialAuthState = {
@@ -23,7 +22,6 @@ const slice = createSlice({
 })
 export const authReducer = slice.reducer;
 export const getAuthStatus = slice.actions.getAuthStatus;
-// const {getAuthStatus} = slice.actions;
 
 
 export const getAuthData = () => async (dispatch:Dispatch) => {
@@ -34,7 +32,7 @@ export const getAuthData = () => async (dispatch:Dispatch) => {
         }else{
 
         }
-        dispatch(getInitialized(true))
+        dispatch(getInitialized({ initialized: true }))
     } catch (error:any) {
         handleNetworkError(error,dispatch)
     }

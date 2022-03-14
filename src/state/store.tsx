@@ -8,7 +8,6 @@ import {loaderReducer} from "./loader-reducer";
 import {authReducer} from "./auth-reducer";
 import {ActionTodolistType} from "./actions/todolists-actions";
 import {ActionTaskType} from "./actions/tasks-actions";
-import {ActionLoaderType} from "./actions/loader-actions";
 import {configureStore} from "@reduxjs/toolkit";
 import thunkMiddleware from "redux-thunk";
 
@@ -26,7 +25,7 @@ export const store = configureStore({
 });
 
 export type AppRootState = ReturnType<typeof rootReducer>;
-export type AppActionsType = ActionTodolistType | ActionTaskType | ActionLoaderType
+export type AppActionsType = ActionTodolistType | ActionTaskType
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootState, unknown, AppActionsType>
 // @ts-ignore

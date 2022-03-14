@@ -38,7 +38,6 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
             return copyTasks;
 
         case ACTIONS_TYPE.ADD_TASKS_TYPE:
-            debugger
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
 
         case ACTIONS_TYPE.DELETE_TASKS_TYPE:

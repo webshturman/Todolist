@@ -48,7 +48,7 @@ export const getTodosTC = () => async (dispatch:Dispatch) => {
         const todoLists = res.data
         dispatch(getTodosAC(todoLists))  //запрашиваем тудулисты
         todoLists.forEach(todoList =>{
-           // @ts-ignore
+            // @ts-ignore
             dispatch(getTaskTC(todoList.id));  //и после запрашиваем таски для каждого тудулиста
         })
 
