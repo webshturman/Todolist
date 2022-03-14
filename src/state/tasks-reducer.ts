@@ -1,12 +1,13 @@
-
 import {TaskAPI} from "../api/task-api";
-import { AppRootState, AppThunk} from "./store";
+import {AppRootState} from "./store";
 
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {ACTIONS_TYPE} from "../enums/actionsConstants";
-import { ActionTaskType, addTaskAC, deleteTaskAC, getTaskAC, updateTaskAC } from "./actions/tasks-actions";
-import { ChangeLoadingStatusAC } from "./actions/loader-actions";
+import {ActionTaskType, addTaskAC, deleteTaskAC, getTaskAC, updateTaskAC} from "./actions/tasks-actions";
 import {TaskPriorities, TaskStateType, TaskStatuses, UpdateTasksModelType} from "../api/types/taskApiType";
+import {ChangeLoadingStatusAC} from "./loader-reducer";
+import {Dispatch} from "redux";
+
 
 //----------------------------------------------------------------------------------
 
@@ -65,34 +66,34 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
     }
 }
 //-----------------------------------------------------------------------------------------------------------------
-export const getTaskTC = (todolistID: string): AppThunk => async dispatch => {
-    dispatch(ChangeLoadingStatusAC('loading'))
+export const getTaskTC = (todolistID: string) => async (dispatch:Dispatch) => {
+    dispatch(ChangeLoadingStatusAC({value:'loading'}))
     try {
         const res = await TaskAPI.getTsk(todolistID)
         dispatch(getTaskAC(todolistID, res.data.items))
-        dispatch(ChangeLoadingStatusAC('succeeded'))
+        dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
     } catch (e) {
 
     }
 }
-export const deleteTaskTC = (taskID: string, todolistID: string): AppThunk => async dispatch => {
-    dispatch(ChangeLoadingStatusAC('loading'))
+export const deleteTaskTC = (taskID: string, todolistID: string) => async (dispatch:Dispatch) => {
+    dispatch(ChangeLoadingStatusAC({value:'loading'}))
     try {
         await TaskAPI.deleteTsk(taskID, todolistID)
         dispatch(deleteTaskAC(taskID, todolistID))
-        dispatch(ChangeLoadingStatusAC('succeeded'))
+        dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
     } catch (e) {
 
     }
 
 }
-export const addTaskTC = (todolistID: string, title: string): AppThunk => async dispatch => {
-    dispatch(ChangeLoadingStatusAC('loading'))
+export const addTaskTC = (todolistID: string, title: string) => async (dispatch:Dispatch) => {
+    dispatch(ChangeLoadingStatusAC({value:'loading'}))
     try {
         const res = await TaskAPI.createTsk(todolistID, title)
         if(res.data.resultCode === 0){
             dispatch(addTaskAC(res.data.data.item))
-            dispatch(ChangeLoadingStatusAC('succeeded'))
+            dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
         } else{
             handleServerError(res.data,dispatch)
         }
@@ -102,19 +103,10 @@ export const addTaskTC = (todolistID: string, title: string): AppThunk => async 
     }
 }
 
-export type UpdateDomainTasksModelType = {
-    title?: string
-    description?: string
-    status?: TaskStatuses
-    priority?: TaskPriorities
-    startDate?: string
-    deadline?: string
-}
-
-export const updateTaskTC = (todolistID: string, taskID: string, model: UpdateDomainTasksModelType): AppThunk => {
-    return async (dispatch,
+export const updateTaskTC = (todolistID: string, taskID: string, model: UpdateDomainTasksModelType) => {
+    return async (dispatch:Dispatch,
                   getState: () => AppRootState) => {
-        dispatch(ChangeLoadingStatusAC('loading'))
+        dispatch(ChangeLoadingStatusAC({value:'loading'}))
         try {
             let allTasks = getState().tasks;
             let task = allTasks[todolistID].find(ts => ts.id === taskID)
@@ -131,11 +123,20 @@ export const updateTaskTC = (todolistID: string, taskID: string, model: UpdateDo
                 const res = await TaskAPI.updateTsk(todolistID, taskID, newModel)
                 dispatch(updateTaskAC(todolistID, taskID, model))
                 // dispatch(updateTaskAC(res.data.data.item))
-                dispatch(ChangeLoadingStatusAC('succeeded'))
+                dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
             }
         } catch (e) {
 
         }
     }
 
+}
+
+export type UpdateDomainTasksModelType = {
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
 }

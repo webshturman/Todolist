@@ -2,10 +2,11 @@
 import {authAPI} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {LoginDataType} from "../api/types/authApiTypes";
-import {ChangeLoadingStatusAC, getInitialized} from "./actions/loader-actions";
+import {getInitialized} from "./actions/loader-actions";
 import {clearTodosDataAC} from "./actions/todolists-actions";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Dispatch} from "redux";
+import { ChangeLoadingStatusAC } from "./loader-reducer";
 
 
 const initialAuthState = {
@@ -15,7 +16,7 @@ const slice = createSlice({
     name: 'auth',
     initialState: initialAuthState,
     reducers: { //создаем мини-редюсеры из action creators
-        getAuthStatus(state, action: PayloadAction<{value:boolean}>){ //аргументы типизируются сами
+        getAuthStatus(state, action: PayloadAction<{value:boolean}>){ //state типизируется сам
            state.isLoggedIn = action.payload.value
         }
     }
@@ -40,7 +41,7 @@ export const getAuthData = () => async (dispatch:Dispatch) => {
 
 }
 export const setLoginData = (data:LoginDataType) => async (dispatch:Dispatch) => {
-    dispatch(ChangeLoadingStatusAC('loading'))
+    dispatch(ChangeLoadingStatusAC({value:'loading'}))
     try {
         const res = await authAPI.login(data)
         if(res.data.resultCode === 0){
@@ -52,12 +53,12 @@ export const setLoginData = (data:LoginDataType) => async (dispatch:Dispatch) =>
     } catch (error:any) {
         handleNetworkError(error,dispatch)
     } finally{
-        dispatch(ChangeLoadingStatusAC('succeeded'))
+        dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
     }
 
 }
 export const setLogOutData = () => async (dispatch:Dispatch) => {
-    dispatch(ChangeLoadingStatusAC('loading'))
+    dispatch(ChangeLoadingStatusAC({value:'loading'}))
     try {
         const res = await authAPI.logOut()
         if(res.data.resultCode === 0){
@@ -70,7 +71,7 @@ export const setLogOutData = () => async (dispatch:Dispatch) => {
     } catch (error:any) {
         handleNetworkError(error,dispatch)
     } finally{
-        dispatch(ChangeLoadingStatusAC('succeeded'))
+        dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
     }
 
 }
