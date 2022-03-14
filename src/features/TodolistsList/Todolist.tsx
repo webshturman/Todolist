@@ -23,19 +23,11 @@ type PropsType = {
     TodolistID:string
     entityStatus:RequestStatusType
 }
-//-----------------------------------------------------------------------------------
 
 export const Todolist: FC<PropsType> = React.memo(({title, changeTodolist, removeTodolist,
                                                        changeTodolistTitle, filter, TodolistID, entityStatus}) => {
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, Array<TaskObjectType>>((state)=> state.tasks[TodolistID])
-    //берем таски для конкретного тудулиста
-
-    // useEffect(()=>{
-    //     dispatch(getTaskTC(TodolistID))
-    // },[])
-
-//-----------------------------------------------------------------------------------------------------------------------
     const todolistRemover = useCallback(()=> removeTodolist(TodolistID),[removeTodolist, TodolistID])
     const changeTdlButton = useCallback((filter:typeFilter) => changeTodolist(filter, TodolistID), [changeTodolist,TodolistID])
     const newAddTask = useCallback((title:string)=> dispatch(addTaskTC(TodolistID,title)),[dispatch])
