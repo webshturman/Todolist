@@ -2,10 +2,11 @@
 import {authAPI} from "../api/auth-api";
 import {handleNetworkError, handleServerError} from "../utils/error-utils";
 import {LoginDataType} from "../api/types/authApiTypes";
-import {clearTodosDataAC} from "./actions/todolists-actions";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Dispatch} from "redux";
 import { ChangeLoadingStatusAC, getInitialized } from "./loader-reducer";
+import { clearTodosDataAC } from "./todolists-reducer";
+
 
 
 const initialAuthState = {
@@ -60,7 +61,7 @@ export const setLogOutData = () => async (dispatch:Dispatch) => {
     try {
         const res = await authAPI.logOut()
         if(res.data.resultCode === 0){
-            dispatch(getAuthStatus({value: true}))
+            dispatch(getAuthStatus({value: false}))
             dispatch(clearTodosDataAC())
         } else{
             handleServerError(res.data,dispatch)

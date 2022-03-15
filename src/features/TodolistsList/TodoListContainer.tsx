@@ -3,6 +3,7 @@ import {Grid, Paper} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addTodosTC,
+    changeTodolistFilterAC,
     deleteTodosTC,
     getTodosTC,
     TodolistStateType,
@@ -13,7 +14,7 @@ import {AppRootState} from "../../state/store";
 import {Todolist} from "./Todolist";
 import {AddItemForm} from "../../Components/AddItemForm";
 import {Navigate} from "react-router-dom";
-import { changeTodolistFilterAC } from '../../state/actions/todolists-actions';
+
 
 
 //-----------------------------------------------------------------------------------------
@@ -31,8 +32,8 @@ export function TodoListContainer() {
     }, [])
 
 
-    const changeTodolist = useCallback((value: typeFilter, TodolistID: string) => {
-        dispatch(changeTodolistFilterAC(value, TodolistID))
+    const changeTodolist = useCallback((newTodolistFilter: typeFilter, todolistId: string ) => {
+        dispatch(changeTodolistFilterAC({newTodolistFilter, todolistId}))
     }, [dispatch])
     const changeTodolistTitle = useCallback((title: string, TodolistID: string) => {
         dispatch(updateTodosTitleTC(title, TodolistID))

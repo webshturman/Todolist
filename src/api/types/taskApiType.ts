@@ -12,6 +12,7 @@ export type GetTaskType={
     totalCount:number
     error: string
 }
+
 export type TaskObjectType={
     description: string
     title: string
