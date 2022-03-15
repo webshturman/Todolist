@@ -1,11 +1,12 @@
-
-
-import {tasksReducer} from "../state/tasks-reducer";
-import {TodolistStateType} from "../state/todolists-reducer";
+import {addTaskAC, deleteTaskAC, tasksReducer, updateTaskAC} from "../state/tasks-reducer";
+import {
+    addTodolistAC,
+    clearTodosDataAC,
+    getTodosAC,
+    removeTodolistAC, todolistReducer,
+    TodolistStateType
+} from "../state/todolists-reducer";
 import {TaskPriorities, TaskStateType, TaskStatuses} from "../api/types/taskApiType";
-import {addTaskAC, deleteTaskAC, updateTaskAC} from "../state/actions/tasks-actions";
-import {addTodolistAC, getTodosAC, removeTodolistAC} from "../state/actions/todolists-actions";
-
 
 let startState:TaskStateType ={};
 beforeEach(()=> {
@@ -34,7 +35,7 @@ test('add new task', ()=> {
     const newTask = {id: '5', description: '', title: 'Task10', status: TaskStatuses.New, priority:TaskPriorities.Low,
         startDate: '', deadline: '', todoListId: 'TodolistID1', order: 0, addedDate: new Date}
 
-    const action = addTaskAC(newTask)
+    const action = addTaskAC({task:newTask})
     const endState = tasksReducer(startState,action)
 
     expect(endState['TodolistID1'].length).toBe(4)
@@ -47,7 +48,7 @@ test('remove task', ()=> {
 
     const TodolistID = 'TodolistID1'
     const removedTaskID = '2'
-    const action = deleteTaskAC(removedTaskID,TodolistID)
+    const action = deleteTaskAC({taskID:removedTaskID, todolistID:TodolistID})
     const endState = tasksReducer(startState,action)
 
     expect(endState[TodolistID].length).toBe(2)
@@ -56,13 +57,16 @@ test('remove task', ()=> {
 })
 
 test('update task status and title', ()=> {
-
     const TodolistID = 'TodolistID1'
-    const status = TaskStatuses.Completed
     const TaskID = '1'
-    const title = 'NEW TASK'
-
-    const action = updateTaskAC(TodolistID,TaskID, {title,status})
+    const action = updateTaskAC({todolistID:TodolistID,
+        taskID:TaskID, model: {
+            title: 'NEW TASK',
+            description: '',
+            status: TaskStatuses.Completed,
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',}})
     const endState = tasksReducer(startState,action)
 
     expect(endState[TodolistID][0].status).toBe(2)
@@ -74,7 +78,7 @@ test('update task status and title', ()=> {
 test('add new task array, when new todolist created', ()=> {
 
     const newTodolist = {id: '51', title: 'What to To DO', filter: 'All'}
-    const action = addTodolistAC(newTodolist)
+    const action = addTodolistAC({todo:newTodolist})
     const endState = tasksReducer(startState,action)
     const keys = Object.keys(endState)
     const newKey = keys.filter(key => key !=='TodolistID1' && key !=='TodolistID2')
@@ -86,7 +90,7 @@ test('add new task array, when new todolist created', ()=> {
 test('delete task array, when todolist removed', ()=> {
 
     const todolistId = 'TodolistID1'
-    const action = removeTodolistAC(todolistId)
+    const action = removeTodolistAC({todolistId})
     const endState = tasksReducer(startState,action)
     const keys = Object.keys(endState)
 
@@ -101,7 +105,7 @@ test('add new tasks, when get todoLists from server', ()=> {
         {id: '20', title: 'What to learn', filter: 'All',entityStatus: 'idle'},
         {id: '11', title: 'What to learn Extra', filter: 'All',entityStatus: 'idle'}
     ];
-    const action = getTodosAC(startTodoLists);
+    const action = getTodosAC({todolist:startTodoLists});
     const endState = tasksReducer({},action);
     const keys = Object.keys(endState);
     // const newKey = keys.filter(key => key !=='TodolistID1' && key !=='TodolistID2');
@@ -109,7 +113,13 @@ test('add new tasks, when get todoLists from server', ()=> {
     expect(keys.length).toBe(2)
     expect(endState[keys[0]]).toStrictEqual([])
     expect(endState[keys[1]]).toStrictEqual([])
-    // expect(endState['20']).toStrictEqual([])
+})
+test('delete all tasks after logout ', ()=> {
+
+    const action = clearTodosDataAC()
+    const endState = tasksReducer(startState,action)
+
+    expect(endState).toStrictEqual({})
 })
 // let keys=['20','11']
 // let endState={

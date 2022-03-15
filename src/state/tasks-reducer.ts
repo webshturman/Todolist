@@ -16,10 +16,6 @@ import {addTodolistAC, clearTodosDataAC, getTodosAC, removeTodolistAC} from "./t
 
 
 const initialState: TaskStateType = {
-    // 'TodolistID': [{}, {}, {}],
-    // 'TodolistID': [{}, {}, {}, {}],
-    // 'TodolistID': [{}, {}, {}],
-    // 'TodolistID': [{}, {}, {}],
 
 }
 
@@ -145,9 +141,8 @@ export const updateTaskTC = (todolistID: string, taskID: string, model: UpdateDo
                     deadline: task.deadline,
                     ...model,
                 }
-                const res = await TaskAPI.updateTsk(todolistID, taskID, newModel)
+                await TaskAPI.updateTsk(todolistID, taskID, newModel)
                 dispatch(updateTaskAC({todolistID, taskID, model}))
-                // dispatch(updateTaskAC(res.data.data.item))
                 dispatch(ChangeLoadingStatusAC({value:'succeeded'}))
             }
         } catch (e) {

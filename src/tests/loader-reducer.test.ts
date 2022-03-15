@@ -1,5 +1,11 @@
-import {InitialLoaderStateType, loaderReducer} from "../state/loader-reducer";
-import {ChangeLoadingStatusAC, getInitialized, SetErrorMessageAC} from "../state/actions/loader-actions";
+import {
+    ChangeLoadingStatusAC,
+    getInitialized,
+    InitialLoaderStateType,
+    loaderReducer,
+    SetErrorMessageAC
+} from "../state/loader-reducer";
+
 
 
 
@@ -14,21 +20,21 @@ beforeEach(() => {
 
 test('loading status should be changed correct ', () => {
 
-    const action = ChangeLoadingStatusAC("loading")
+    const action = ChangeLoadingStatusAC({value:"loading"})
     const endState = loaderReducer(startState, action)
 
     expect(endState.status).toBe("loading")
 })
 test('error message should be set correct ', () => {
 
-    const action = SetErrorMessageAC("error")
+    const action = SetErrorMessageAC({error:"error"})
     const endState = loaderReducer(startState, action)
 
     expect(endState.error).toBe("error")
 })
 test('Initialized status should change', () => {
 
-    const action = getInitialized(true)
+    const action = getInitialized({initialized:true})
     const endState = loaderReducer(startState, action)
 
     expect(endState.isInitialized).toBeTruthy()
